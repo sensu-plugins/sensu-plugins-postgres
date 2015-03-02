@@ -1,18 +1,24 @@
-## Sensu-Plugins-disk-checks
+## Sensu-Plugins-postgres
 
-[![Build Status](https://travis-ci.org/sensu-plugins/sensu-plugins-postgres.svg?branch=master)][1]
-[![Gem Version](https://badge.fury.io/rb/sensu-plugins-postgres.svg)][2]
-[![Code Climate](https://codeclimate.com/github/sensu-plugins/sensu-plugins-postgres/badges/gpa.svg)][3]
-[![Test Coverage](https://codeclimate.com/github/sensu-plugins/sensu-plugins-postgres/badges/coverage.svg)][4]
-[![Dependency Status](https://gemnasium.com/sensu-plugins/sensu-plugins-postgres.svg)][5]
+[![Build Status](https://travis-ci.org/sensu-plugins/sensu-plugins-postgres.svg?branch=master)](https://travis-ci.org/sensu-plugins/sensu-plugins-postgres)
+[![Gem Version](https://badge.fury.io/rb/sensu-plugins-postgres.svg)](http://badge.fury.io/rb/sensu-plugins-postgres)
+[![Code Climate](https://codeclimate.com/github/sensu-plugins/sensu-plugins-postgres/badges/gpa.svg)](https://codeclimate.com/github/sensu-plugins/sensu-plugins-postgres)
+[![Test Coverage](https://codeclimate.com/github/sensu-plugins/sensu-plugins-postgres/badges/coverage.svg)](https://codeclimate.com/github/sensu-plugins/sensu-plugins-postgres)
+[![Dependency Status](https://gemnasium.com/sensu-plugins/sensu-plugins-postgres.svg)](https://gemnasium.com/sensu-plugins/sensu-plugins-postgres)
 
 ## Functionality
 
 ## Files
- *
- *
- *
- *
+ * bin/check-postgres-alive
+ * bin/metric-postgres-dbsize
+ * bin/metric-postgres-statsbgwriter
+ * bin/metric-postgres-statstable
+ * bin/check-postgres-replication
+ * bin/metric-postgres-graphite
+ * bin/metric-postgres-statsdb
+ * bin/metric-postgres-connections
+ * bin/metric-postgres-locks
+ * bin/metric-postgres-statsio
 
 ## Usage
 
