@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.files                  = Dir.glob('{bin,lib}/**/*') + %w(LICENSE README.md CHANGELOG.md)
   s.homepage               = 'https://github.com/sensu-plugins/sensu-plugins-postgres'
   s.license                = 'MIT'
-  s.metadata               = { 'maintainer'         => '',
+  s.metadata               = { 'maintainer'         => '@tas50',
                                'development_status' => 'active',
                                'production_status'  => 'unstable - testing recommended',
                                'release_draft'      => 'false',
