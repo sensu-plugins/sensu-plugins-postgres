@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.authors                = ['Sensu-Plugins and contributors']
   s.cert_chain             = ['certs/sensu-plugins.pem']
   s.date                   = Date.today.to_s
-  s.description            = 'Sensu plugins for Postgres SQL server'
+  s.description            = 'Sensu plugins for postgres'
   s.email                  = '<sensu-users@googlegroups.com>'
   s.executables            = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.files                  = Dir.glob('{bin,lib}/**/*') + %w(LICENSE README.md CHANGELOG.md)
@@ -26,19 +26,19 @@ Gem::Specification.new do |s|
                                'production_status'  => 'unstable - testing recommended',
                                'release_draft'      => 'false',
                                'release_prerelease' => 'false'
-                              }
+  }
   s.name                   = 'sensu-plugins-postgres'
   s.platform               = Gem::Platform::RUBY
   s.post_install_message   = 'You can use the embedded Ruby by setting EMBEDDED_RUBY=true in /etc/default/sensu'
   s.require_paths          = ['lib']
   s.required_ruby_version  = '>= 1.9.3'
   s.signing_key            = File.expand_path(pvt_key) if $PROGRAM_NAME =~ /gem\z/
-  s.summary                = 'Sensu plugins for Postgres SQL server'
+  s.summary                = 'Sensu plugins for postgres'
   s.test_files             = s.files.grep(%r{^(test|spec|features)/})
   s.version                = SensuPluginsPostgres::Version::VER_STRING
 
   s.add_runtime_dependency 'sensu-plugin', '1.1.0'
-  s.add_runtime_dependency 'pg', '0.18.2'
+  s.add_runtime_dependency 'pg',           '0.18.2'
 
   s.add_development_dependency 'codeclimate-test-reporter', '~> 0.4'
   s.add_development_dependency 'rubocop',                   '~> 0.30'
