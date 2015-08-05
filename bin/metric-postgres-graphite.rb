@@ -52,7 +52,7 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
     m_segbytes = conn_master.exec('SHOW wal_segment_size').getvalue(0, 0).sub(/\D+/, '').to_i << 20
     conn_master.close
 
-    def lag_compute(res1, res, m_segbytes)
+    def lag_compute(res1, res, m_segbytes) # rubocop:disable NestedMethodDefinition
       m_segment, m_offset = res1.split(/\//)
       s_segment, s_offset = res.split(/\//)
       ((m_segment.hex - s_segment.hex) * m_segbytes) + (m_offset.hex - s_offset.hex)

@@ -25,12 +25,6 @@
 
 ## Installation
 
-[Installation and Setup](https://github.com/sensu-plugins/documentation/blob/master/user_docs/installation_instructions.md)
+[Installation and Setup](http://sensu-plugins.io/docs/installation_instructions.html)
 
 ## Notes
-
-[1]:[https://travis-ci.org/sensu-plugins/sensu-plugins-postgres]
-[2]:[http://badge.fury.io/rb/sensu-plugins-postgres]
-[3]:[https://codeclimate.com/github/sensu-plugins/sensu-plugins-postgres]
-[4]:[https://codeclimate.com/github/sensu-plugins/sensu-plugins-postgres]
-[5]:[https://gemnasium.com/sensu-plugins/sensu-plugins-postgres]
