@@ -59,7 +59,7 @@ class PostgresStatsTableMetrics < Sensu::Plugin::Metric::CLI::Graphite
          long: '--scheme SCHEME',
          default: "#{Socket.gethostname}.postgresql"
 
-  def run # rubocop:disable all
+  def run
     timestamp = Time.now.to_i
 
     con     = PG::Connection.new(config[:hostname], config[:port], nil, nil, config[:db], config[:user], config[:password])
