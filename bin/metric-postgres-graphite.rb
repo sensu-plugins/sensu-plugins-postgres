@@ -37,11 +37,17 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
          short: '-g SCHEME',
          long: '--scheme SCHEME',
          default: "#{Socket.gethostname}.postgres.replication_lag"
+         
+  option :port,
+         description: 'Database port',
+         short: '-P PORT',
+         long: '--port PORT',
+         default: 5432
 
   def run
     @dbmaster = config[:master_host]
     @dbslave = config[:slave_host]
-    @dbport = 5432
+    @dbport = config[:port]
     @dbname = config[:database]
     @dbusername = config[:user]
     @password = config[:pass]
