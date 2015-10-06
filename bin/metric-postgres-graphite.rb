@@ -37,7 +37,7 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
          short: '-g SCHEME',
          long: '--scheme SCHEME',
          default: "#{Socket.gethostname}.postgres.replication_lag"
-         
+
   option :port,
          description: 'Database port',
          short: '-P PORT',
