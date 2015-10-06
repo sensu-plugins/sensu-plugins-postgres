@@ -4,13 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## Unreleased
+
+## [0.0.5] - 2015-10-06
 ### Changed
 - updated pg gem to 0.18.3
+Added port cli option to postgres-graphite.rb.
 
 ## [0.0.4] - 2015-08-04
 ### Changed
 - general cleanup, no code changes
-
 
 ## [0.0.3] - 2015-07-14
 ### Changed
