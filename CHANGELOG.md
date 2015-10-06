@@ -3,7 +3,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
-## [Unreleased][unreleased]
+## Unreleased
+### Changed
+- updated pg gem to 0.18.3
 
 ## [0.0.4] - 2015-08-04
 ### Changed
