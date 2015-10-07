@@ -1,13 +1,31 @@
-#!/usr/bin/env ruby
+#! /usr/bin/env ruby
 #
-# Postgres Alive Plugin
+#   check-postgres-alive
 #
-# This plugin attempts to login to postgres with provided credentials.
+# DESCRIPTION:
 #
-# Copyright 2012 Lewis Preson & Tom Bassindale
+#   This plugin attempts to login to postgres with provided credentials.
 #
-# Released under the same terms as Sensu (the MIT license); see LICENSE
-# for details.
+# OUTPUT:
+#   plain text
+#
+# PLATFORMS:
+#   Linux
+#
+# DEPENDENCIES:
+#   gem: sensu-plugin
+#   gem: pg
+#
+# USAGE:
+#   ./check-postgres-alive.rb -u db_user -p db_pass -h db_host -d db
+#
+# NOTES:
+#
+# LICENSE:
+#   Copyright (c) 2012 Lewis Preson & Tom Bassindale
+#   Released under the same terms as Sensu (the MIT license); see LICENSE
+#   for details.
+#
 
 require 'sensu-plugin/check/cli'
 require 'pg'

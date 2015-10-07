@@ -1,4 +1,30 @@
-#!/usr/bin/env ruby
+#! /usr/bin/env ruby
+#
+#   metric-postgres-graphite
+#
+# DESCRIPTION:
+#
+#   This plugin collects postgres replication lag metrics
+#
+# OUTPUT:
+#   metric data
+#
+# PLATFORMS:
+#   Linux
+#
+# DEPENDENCIES:
+#   gem: sensu-plugin
+#   gem: pg
+#
+# USAGE:
+#   ./metric-postgres-graphite.rb -m master_host -s slave_host -d db -u db_user -p db_pass
+#
+# NOTES:
+#
+# LICENSE:
+#   Released under the same terms as Sensu (the MIT license); see LICENSE
+#   for details.
+#
 
 require 'pg'
 require 'sensu-plugin/metric/cli'
