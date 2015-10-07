@@ -1,4 +1,30 @@
-#!/usr/bin/env ruby
+#! /usr/bin/env ruby
+#
+#   check-postgres-replication
+#
+# DESCRIPTION:
+#
+#   This plugin checks postgresql replication lag
+#
+# OUTPUT:
+#   plain text
+#
+# PLATFORMS:
+#   Linux
+#
+# DEPENDENCIES:
+#   gem: sensu-plugin
+#   gem: pg
+#
+# USAGE:
+#   ./check-postgres-replication.rb -m master_host -s slave_host -d db -u db_user -p db_pass -w warn_threshold -c crit_threshold
+#
+# NOTES:
+#
+# LICENSE:
+#   Released under the same terms as Sensu (the MIT license); see LICENSE
+#   for details.
+#
 
 require 'sensu-plugin/check/cli'
 require 'pg'

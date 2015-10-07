@@ -1,19 +1,33 @@
-#!/usr/bin/env ruby
+#! /usr/bin/env ruby
 #
-# Postgres Stat Table Metrics
-# ===
+#   metric-postgres-statstable
 #
-# Dependencies
-# -----------
-# - PSQL `track_counts` enabled
-# - Ruby gem `pg`
+# DESCRIPTION:
 #
+#   This plugin collects postgres database metrics from the pg_stat tables
 #
-# Copyright 2012 Kwarter, Inc <platforms@kwarter.com>
-# Author Gilles Devaux <gilles.devaux@gmail.com>
+# OUTPUT:
+#   metric data
 #
-# Released under the same terms as Sensu (the MIT license); see LICENSE
-# for details.
+# PLATFORMS:
+#   Linux
+#
+# DEPENDENCIES:
+#   gem: sensu-plugin
+#   gem: pg
+#
+# USAGE:
+#   ./metric-postgres-statstable.rb -u db_user -p db_pass -h db_host -d db -s scope
+#
+# NOTES:
+#   Requires PSQL `track_counts` enabled
+#
+# LICENSE:
+#   Copyright (c) 2012 Kwarter, Inc <platforms@kwarter.com>
+#   Author Gilles Devaux <gilles.devaux@gmail.com>
+#   Released under the same terms as Sensu (the MIT license); see LICENSE
+#   for details.
+#
 
 require 'sensu-plugin/metric/cli'
 require 'pg'

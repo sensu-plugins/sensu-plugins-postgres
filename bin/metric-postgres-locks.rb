@@ -1,18 +1,32 @@
-#!/usr/bin/env ruby
+#! /usr/bin/env ruby
 #
-# Postgres Locks Metrics
-# ===
+#   metric-postgres-locks
 #
-# Dependencies
-# -----------
-# - Ruby gem `pg`
+# DESCRIPTION:
 #
+#   This plugin collects postgres database lock metrics
 #
-# Copyright 2012 Kwarter, Inc <platforms@kwarter.com>
-# Author Gilles Devaux <gilles.devaux@gmail.com>
+# OUTPUT:
+#   metric data
 #
-# Released under the same terms as Sensu (the MIT license); see LICENSE
-# for details.
+# PLATFORMS:
+#   Linux
+#
+# DEPENDENCIES:
+#   gem: sensu-plugin
+#   gem: pg
+#
+# USAGE:
+#   ./metric-postgres-locks.rb -u db_user -p db_pass -h db_host -d db
+#
+# NOTES:
+#
+# LICENSE:
+#   Copyright (c) 2012 Kwarter, Inc <platforms@kwarter.com>
+#   Author Gilles Devaux <gilles.devaux@gmail.com>
+#   Released under the same terms as Sensu (the MIT license); see LICENSE
+#   for details.
+#
 
 require 'sensu-plugin/metric/cli'
 require 'pg'
