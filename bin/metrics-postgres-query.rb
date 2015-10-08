@@ -32,51 +32,51 @@ require 'pg'
 
 class MetricsPostgresQuery < Sensu::Plugin::Metric::CLI::Graphite
   option :user,
-    description: 'Postgres User',
-    short: '-u USER',
-    long: '--user USER'
+         description: 'Postgres User',
+         short: '-u USER',
+         long: '--user USER'
 
   option :password,
-    description: 'Postgres Password',
-    short: '-p PASS',
-    long: '--password PASS'
+         description: 'Postgres Password',
+         short: '-p PASS',
+         long: '--password PASS'
 
   option :hostname,
-    description: 'Hostname to login to',
-    short: '-h HOST',
-    long: '--hostname HOST',
-    default: 'localhost'
+         description: 'Hostname to login to',
+         short: '-h HOST',
+         long: '--hostname HOST',
+         default: 'localhost'
 
   option :port,
-    description: 'Database port',
-    short: '-P PORT',
-    long: '--port PORT',
-    default: 5432
+         description: 'Database port',
+         short: '-P PORT',
+         long: '--port PORT',
+         default: 5432
 
   option :db,
-    description: 'Database name',
-    short: '-d DB',
-    long: '--db DB',
-    default: 'postgres'
+         description: 'Database name',
+         short: '-d DB',
+         long: '--db DB',
+         default: 'postgres'
 
   option :query,
-    description: 'Database query to execute',
-    short: '-q QUERY',
-    long: '--query QUERY',
-    required: true
+         description: 'Database query to execute',
+         short: '-q QUERY',
+         long: '--query QUERY',
+         required: true
 
   option :count_tuples,
-    description: 'Count the number of tuples (rows) returned by the query',
-    short: '-t',
-    long: '--tuples',
-    boolean: true,
-    default: false
+         description: 'Count the number of tuples (rows) returned by the query',
+         short: '-t',
+         long: '--tuples',
+         boolean: true,
+         default: false
 
   option :scheme,
-    description: 'Metric naming scheme, text to prepend to metric',
-    short: '-s SCHEME',
-    long: '--scheme SCHEME',
-    default: 'postgres'
+         description: 'Metric naming scheme, text to prepend to metric',
+         short: '-s SCHEME',
+         long: '--scheme SCHEME',
+         default: 'postgres'
 
   def run
     begin
