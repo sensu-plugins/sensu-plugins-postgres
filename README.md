@@ -20,6 +20,8 @@
  * bin/metric-postgres-connections.rb
  * bin/metric-postgres-locks.rb
  * bin/metric-postgres-statsio.rb
+ * bin/check-postgres-query.rb
+ * bin/metrics-postgres-query.rb
 
 ## Usage
 
