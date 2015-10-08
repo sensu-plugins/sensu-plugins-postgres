@@ -4,11 +4,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## Unreleased
+### Changed
+- standardized headers
+
+### Added
+- added plugins for querying postgres
 
 ## [0.0.5] - 2015-10-06
 ### Changed
 - updated pg gem to 0.18.3
-Added port cli option to postgres-graphite.rb.
+- Added port cli option to postgres-graphite.rb.
 
 ## [0.0.4] - 2015-08-04
 ### Changed
