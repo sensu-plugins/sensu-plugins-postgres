@@ -3,6 +3,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
+## [0.0.7] - 2015-12-09
+### Changed
+- fixed [ -S | -ssl ] short option
+
 ## [0.0.6] - 2015-10-08
 ### Changed
 - standardized headers
