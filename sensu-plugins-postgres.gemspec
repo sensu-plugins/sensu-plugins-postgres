@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.authors                = ['Sensu-Plugins and contributors']
   s.cert_chain             = ['certs/sensu-plugins.pem']
   s.date                   = Date.today.to_s
-  s.description            = 'This plugin provides native PostrgreSQL
+  s.description            = 'This plugin provides native PostgreSQL
                               instrumentation for monitoring and metrics
                               collection, including: service health, database
                               connectivity, database locks, replication status,
