@@ -57,7 +57,7 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
          description: 'Database PASSWORD')
 
   option(:ssl,
-         short: '-s',
+         short: '-S',
          long: '--ssl',
          boolean: true,
          description: 'Require SSL')
