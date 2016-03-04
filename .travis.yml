@@ -16,13 +16,15 @@ notifications:
     on_failure: always
 script:
 - bundle exec rake default
+- gem build sensu-plugins-postgres.gemspec
+- gem install sensu-plugins-postgres-*.gem
 deploy:
   provider: rubygems
   api_key:
-    secure: CEl8sMqHZhUSekhiGoePkcbTl7vKt4aufE10TWKFX9aCL7eUyqzDX7K1desQeP27ZjXflF876/LgvsSDhOeifdIaolBSpSXu/9e6YuCDdGWInAcSKjBK8lYTpfQqF2NGqOapJce+v+mAkNiLiMmTZUN8YL8XO4ziPmuoMeW2NBg=
+    secure: L3ot3q90Sz+1dhi1Lxg4rvxZ0AEUCq2dL55Gzau48wou72T3GYSDBoqVGnZPmQcS9miNy4J7NZMxUgfoycnceqUkkue8+ss4c42NtrYs+SLU+rnmB/cwLTBQJ1ERRNXqgOYTwWt8EuIy6Dong1oCu8voFSj7NH4sXxTTO7RFho8=
   gem: sensu-plugins-postgres
   on:
-    tags: true
+    ags: true
     all_branches: true
     rvm: 1.9.3
     rvm: 2.0

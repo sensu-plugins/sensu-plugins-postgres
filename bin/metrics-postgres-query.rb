@@ -81,16 +81,16 @@ class MetricsPostgresQuery < Sensu::Plugin::Metric::CLI::Graphite
   def run
     begin
       con = PG::Connection.new(config[:hostname], config[:port], nil, nil, config[:db], config[:user], config[:password])
-      res = con.exec("#{config[:query]}")
+      res = con.exec(config[:query].to_s)
     rescue PG::Error => e
       unknown "Unable to query PostgreSQL: #{e.message}"
     end
 
-    if config[:check_tuples]
-      value = res.ntuples
-    else
-      value = res.first.values.first
-    end
+    value = if config[:check_tuples]
+              res.ntuples
+            else
+              res.first.values.first
+            end
 
     output config[:scheme], value
     ok

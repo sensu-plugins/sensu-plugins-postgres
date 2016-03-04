@@ -91,16 +91,16 @@ class CheckPostgresQuery < Sensu::Plugin::Check::CLI
   def run
     begin
       con = PG::Connection.new(config[:hostname], config[:port], nil, nil, config[:db], config[:user], config[:password])
-      res = con.exec("#{config[:query]}")
+      res = con.exec(config[:query].to_s)
     rescue PG::Error => e
       unknown "Unable to query PostgreSQL: #{e.message}"
     end
 
-    if config[:check_tuples]
-      value = res.ntuples
-    else
-      value = res.first.values.first.to_f
-    end
+    value = if config[:check_tuples]
+              res.ntuples
+            else
+              res.first.values.first.to_f
+            end
 
     calc = Dentaku::Calculator.new
     if config[:critical] && calc.evaluate(config[:critical], value: value)
