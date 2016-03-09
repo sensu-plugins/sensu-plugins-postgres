@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Added
+- Add new plugin `check-postgres-connections` that checks the number of connections to a DB
 
 ## [0.0.7] - 2015-12-10
 ### Changed
