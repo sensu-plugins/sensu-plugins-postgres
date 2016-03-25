@@ -4,8 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
-- Correctly evaluate and collect metrics for active connections and active connections waiting on backend locks
-- Add new metric `total`
+
+## [0.1.1] - 2016-03-24
+### Added
+- metric-postgres-connections: Add new metric `total`
+
+### Fixed
+- metric-postgres-connections: Correctly evaluate and collect metrics for active connections and active connections waiting on backend locks
 
 ## [0.1.0] - 2016-03-09
 ### Added
