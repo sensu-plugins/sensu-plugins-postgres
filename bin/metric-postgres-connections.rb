@@ -77,17 +77,20 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
 
     metrics = {
       active: 0,
-      waiting: 0
+      waiting: 0,
+      total: 0
     }
     con.exec(request.join(' ')) do |result|
       result.each do |row|
-        if row['waiting']
+        if row['waiting'] == 't'
           metrics[:waiting] = row['count']
-        else
+        elsif row['waiting'] == 'f'
           metrics[:active] = row['count']
         end
       end
     end
+
+    metrics[:total] = (metrics[:waiting].to_i + metrics[:active].to_i)
 
     metrics.each do |metric, value|
       output "#{config[:scheme]}.connections.#{config[:db]}.#{metric}", value, timestamp
