@@ -84,7 +84,7 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
       result.each do |row|
         if row['waiting'] == 't'
           metrics[:waiting] = row['count']
-        elsif role['waiting'] == 'f'
+        elsif row['waiting'] == 'f'
           metrics[:active] = row['count']
         end
       end
