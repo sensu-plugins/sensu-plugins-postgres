@@ -24,7 +24,7 @@ deploy:
     secure: L3ot3q90Sz+1dhi1Lxg4rvxZ0AEUCq2dL55Gzau48wou72T3GYSDBoqVGnZPmQcS9miNy4J7NZMxUgfoycnceqUkkue8+ss4c42NtrYs+SLU+rnmB/cwLTBQJ1ERRNXqgOYTwWt8EuIy6Dong1oCu8voFSj7NH4sXxTTO7RFho8=
   gem: sensu-plugins-postgres
   on:
-    ags: true
+    tags: true
     all_branches: true
     rvm: 1.9.3
     rvm: 2.0
