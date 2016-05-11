@@ -114,10 +114,9 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
 
     message = "replication delayed by #{lag_in_mb}MB :: master:#{master} slave:#{slave} m_segbytes:#{m_segbytes}"
 
-    case
-    when lag_in_mb >= config[:crit]
+    if lag_in_mb >= config[:crit]
       critical message
-    when lag_in_mb >= config[:warn]
+    elsif lag_in_mb >= config[:warn]
       warning message
     else
       ok message
