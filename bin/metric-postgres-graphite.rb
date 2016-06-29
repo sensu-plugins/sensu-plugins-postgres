@@ -70,6 +70,12 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
          long: '--port PORT',
          default: 5432
 
+  option :timeout,
+         description: 'Connection timeout (seconds)',
+         short: '-T TIMEOUT',
+         long: '--timeout TIMEOUT',
+         default: nil
+
   def run
     @dbmaster = config[:master_host]
     @dbslave = config[:slave_host]
@@ -77,9 +83,10 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
     @dbname = config[:database]
     @dbusername = config[:user]
     @password = config[:pass]
+    @timeout  = config[:timeout]
 
     # Establishing connections to the master
-    conn_master = PGconn.connect(@dbmaster, @dbport, '', '', @dbname, @dbusername, @password)
+    conn_master = PGconn.connect(@dbmaster, @dbport, '', '', @dbname, @dbusername, @password, :connect_timeout => @timeout)
     res1 = conn_master.exec('SELECT pg_current_xlog_location()').getvalue(0, 0)
     m_segbytes = conn_master.exec('SHOW wal_segment_size').getvalue(0, 0).sub(/\D+/, '').to_i << 20
     conn_master.close
@@ -91,7 +98,7 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
     end
 
     # Establishing connections to the slave
-    conn_slave = PGconn.connect(@dbslave, @dbport, '', '', @dbname, @dbusername, @password)
+    conn_slave = PGconn.connect(@dbslave, @dbport, '', '', @dbname, @dbusername, @password, :connect_timeout => @timeout)
     res = conn_slave.exec('SELECT pg_last_xlog_receive_location()').getvalue(0, 0)
     conn_slave.close
 

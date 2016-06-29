@@ -66,10 +66,16 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
          long: '--scheme SCHEME',
          default: "#{Socket.gethostname}.postgresql"
 
+  option :timeout,
+         description: 'Connection timeout (seconds)',
+         short: '-T TIMEOUT',
+         long: '--timeout TIMEOUT',
+         default: nil
+
   def run
     timestamp = Time.now.to_i
 
-    con     = PG::Connection.new(config[:hostname], config[:port], nil, nil, 'postgres', config[:user], config[:password])
+    con     = PG::Connection.new(config[:hostname], config[:port], nil, nil, 'postgres', config[:user], config[:password], :connect_timeout => config[:timeout])
     request = [
       'select count(*), waiting from pg_stat_activity',
       "where datname = '#{config[:db]}' group by waiting"

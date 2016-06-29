@@ -88,9 +88,15 @@ class CheckPostgresQuery < Sensu::Plugin::Check::CLI
          long: '--critical CRITICAL',
          default: nil
 
+  option :timeout,
+         description: 'Connection timeout (seconds)',
+         short: '-T TIMEOUT',
+         long: '--timeout TIMEOUT',
+         default: nil
+
   def run
     begin
-      con = PG::Connection.new(config[:hostname], config[:port], nil, nil, config[:db], config[:user], config[:password])
+      con = PG::Connection.new(config[:hostname], config[:port], nil, nil, config[:db], config[:user], config[:password], :connect_timeout => config[:timeout])
       res = con.exec(config[:query].to_s)
     rescue PG::Error => e
       unknown "Unable to query PostgreSQL: #{e.message}"
