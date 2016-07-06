@@ -56,7 +56,7 @@ class PostgresStatsTableMetrics < Sensu::Plugin::Metric::CLI::Graphite
          long: '--port PORT',
          default: 5432
 
-  option :db,
+  option :database,
          description: 'Database name',
          short: '-d DB',
          long: '--db DB',
@@ -82,7 +82,11 @@ class PostgresStatsTableMetrics < Sensu::Plugin::Metric::CLI::Graphite
   def run
     timestamp = Time.now.to_i
 
-    con     = PG::Connection.new(config[:hostname], config[:port], nil, nil, config[:db], config[:user], config[:password], :connect_timeout => config[:timeout])
+    con     = PG.connect(host: config[:hostname],
+                         dbname: config[:database],
+                         user: config[:user],
+                         password: config[:password],
+                         connect_timeout: config[:timeout])
     request = [
       'select sum(seq_scan) as seq_scan, sum(seq_tup_read) as seq_tup_read,',
       'sum(idx_scan) as idx_scan, sum(idx_tup_fetch) as idx_tup_fetch,',

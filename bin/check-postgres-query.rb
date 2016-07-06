@@ -96,7 +96,11 @@ class CheckPostgresQuery < Sensu::Plugin::Check::CLI
 
   def run
     begin
-      con = PG::Connection.new(config[:hostname], config[:port], nil, nil, config[:db], config[:user], config[:password], :connect_timeout => config[:timeout])
+      con = PG.connect(host: config[:hostname],
+                       dbname: config[:database],
+                       user: config[:user],
+                       password: config[:password],
+                       connect_timeout: config[:timeout])
       res = con.exec(config[:query].to_s)
     rescue PG::Error => e
       unknown "Unable to query PostgreSQL: #{e.message}"

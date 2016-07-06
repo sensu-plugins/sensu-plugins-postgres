@@ -69,7 +69,11 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
   def run
     timestamp = Time.now.to_i
 
-    con     = PG::Connection.new(config[:hostname], config[:port], nil, nil, 'postgres', config[:user], config[:password], :connect_timeout => config[:timeout])
+    con     = PG.connect(host: config[:hostname],
+                         dbname: 'postgres',
+                         user: config[:user],
+                         password: config[:password],
+                         connect_timeout: config[:timeout])
     request = [
       'select checkpoints_timed, checkpoints_req,',
       'buffers_checkpoint, buffers_clean,',

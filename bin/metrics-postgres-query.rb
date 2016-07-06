@@ -53,7 +53,7 @@ class MetricsPostgresQuery < Sensu::Plugin::Metric::CLI::Graphite
          long: '--port PORT',
          default: 5432
 
-  option :db,
+  option :database,
          description: 'Database name',
          short: '-d DB',
          long: '--db DB',
@@ -86,7 +86,11 @@ class MetricsPostgresQuery < Sensu::Plugin::Metric::CLI::Graphite
 
   def run
     begin
-      con = PG::Connection.new(config[:hostname], config[:port], nil, nil, config[:db], config[:user], config[:password], :connect_timeout => config[:timeout])
+      con = PG.connect(host: config[:hostname],
+                       dbname: config[:database],
+                       user: config[:user],
+                       password: config[:password],
+                       connect_timeout: config[:timeout])
       res = con.exec(config[:query].to_s)
     rescue PG::Error => e
       unknown "Unable to query PostgreSQL: #{e.message}"

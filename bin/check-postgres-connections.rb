@@ -58,7 +58,7 @@ class CheckPostgresConnections < Sensu::Plugin::Check::CLI
          long: '--port PORT',
          default: 5432
 
-  option :db,
+  option :database,
          description: 'Database name',
          short: '-d DB',
          long: '--db DB',
@@ -93,7 +93,11 @@ class CheckPostgresConnections < Sensu::Plugin::Check::CLI
 
   def run
     begin
-      con = PG::Connection.new(config[:hostname], config[:port], nil, nil, config[:db], config[:user], config[:password], :connect_timeout => config[:timeout])
+      con = PG.connect(host: config[:hostname],
+                       dbname: config[:database],
+                       user: config[:user],
+                       password: config[:password],
+                       connect_timeout: config[:timeout])
       max_conns = con.exec('SHOW max_connections').getvalue(0, 0).to_i
       current_conns = con.exec('SELECT count(*) from pg_stat_activity').getvalue(0, 0).to_i
     rescue PG::Error => e

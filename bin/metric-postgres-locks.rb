@@ -77,7 +77,11 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
 
     locks_per_type = Hash.new(0)
 
-    con     = PG::Connection.new(config[:hostname], config[:port], nil, nil, 'postgres', config[:user], config[:password], :connect_timeout => config[:timeout])
+    con     = PG.connect(host: config[:hostname],
+                         dbname: config[:database],
+                         user: config[:user],
+                         password: config[:password],
+                         connect_timeout: config[:timeout])
     request = [
       'SELECT mode, count(mode) FROM pg_locks',
       "where database = (select oid from pg_database where datname = '#{config[:db]}')",

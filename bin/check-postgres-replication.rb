@@ -98,7 +98,8 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
                              dbname: config[:database],
                              user: config[:user],
                              password: config[:password],
-                             sslmode: ssl_mode, :connect_timeout => config[:timeout])
+                             sslmode: ssl_mode,
+                             connect_timeout: config[:timeout])
 
     master = conn_master.exec('SELECT pg_current_xlog_location()').getvalue(0, 0)
     m_segbytes = conn_master.exec('SHOW wal_segment_size').getvalue(0, 0).sub(/\D+/, '').to_i << 20
@@ -109,7 +110,8 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
                             dbname: config[:database],
                             user: config[:user],
                             password: config[:password],
-                            sslmode: ssl_mode, :connect_timeout => config[:timeout])
+                            sslmode: ssl_mode,
+                            connect_timeout: config[:timeout])
 
     slave = conn_slave.exec('SELECT pg_last_xlog_receive_location()').getvalue(0, 0)
     conn_slave.close

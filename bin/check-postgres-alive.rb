@@ -65,7 +65,11 @@ class CheckPostgres < Sensu::Plugin::Check::CLI
          default: nil
 
   def run
-    con = PG::Connection.new(config[:hostname], config[:port], nil, nil, config[:database], config[:user], config[:password], :connect_timeout => config[:timeout])
+    con = PG.connect(host: config[:hostname],
+                     dbname: config[:database],
+                     user: config[:user],
+                     password: config[:password],
+                     connect_timeout: config[:timeout])
     res = con.exec('select version();')
     info = res.first
 
