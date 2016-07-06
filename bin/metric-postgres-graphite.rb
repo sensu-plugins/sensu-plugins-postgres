@@ -95,10 +95,10 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
 
     # Establishing connections to the slave
     conn_slave = PG.connect(host: config[:slave_host],
-                             dbname: config[:database],
-                             user: config[:user],
-                             password: config[:password],
-                             connect_timeout: config[:timeout])
+                            dbname: config[:database],
+                            user: config[:user],
+                            password: config[:password],
+                            connect_timeout: config[:timeout])
     res = conn_slave.exec('SELECT pg_last_xlog_receive_location()').getvalue(0, 0)
     conn_slave.close
 
