@@ -58,8 +58,18 @@ class CheckPostgres < Sensu::Plugin::Check::CLI
          long: '--port PORT',
          default: 5432
 
+  option :timeout,
+         description: 'Connection timeout (seconds)',
+         short: '-T TIMEOUT',
+         long: '--timeout TIMEOUT',
+         default: nil
+
   def run
-    con = PG::Connection.new(config[:hostname], config[:port], nil, nil, config[:database], config[:user], config[:password])
+    con = PG.connect(host: config[:hostname],
+                     dbname: config[:database],
+                     user: config[:user],
+                     password: config[:password],
+                     connect_timeout: config[:timeout])
     res = con.exec('select version();')
     info = res.first
 
