@@ -81,7 +81,7 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
                          password: config[:password],
                          connect_timeout: config[:timeout])
     request = [
-      "select pg_database_size('#{config[:db]}')"
+      "select pg_database_size('#{config[:database]}')"
     ]
 
     con.exec(request.join(' ')) do |result|
