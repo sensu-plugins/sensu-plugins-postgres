@@ -85,19 +85,19 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
       'select xact_commit, xact_rollback,',
       'blks_read, blks_hit,',
       'tup_returned, tup_fetched, tup_inserted, tup_updated, tup_deleted',
-      "from pg_stat_database where datname='#{config[:db]}'"
+      "from pg_stat_database where datname='#{config[:database]}'"
     ]
     con.exec(request.join(' ')) do |result|
       result.each do |row|
-        output "#{config[:scheme]}.statsdb.#{config[:db]}.xact_commit", row['xact_commit'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:db]}.xact_rollback", row['xact_rollback'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:db]}.blks_read", row['blks_read'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:db]}.blks_hit", row['blks_hit'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:db]}.tup_returned", row['tup_returned'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:db]}.tup_fetched", row['tup_fetched'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:db]}.tup_inserted", row['tup_inserted'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:db]}.tup_updated", row['tup_updated'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:db]}.tup_deleted", row['tup_deleted'], timestamp
+        output "#{config[:scheme]}.statsdb.#{config[:database]}.xact_commit", row['xact_commit'], timestamp
+        output "#{config[:scheme]}.statsdb.#{config[:database]}.xact_rollback", row['xact_rollback'], timestamp
+        output "#{config[:scheme]}.statsdb.#{config[:database]}.blks_read", row['blks_read'], timestamp
+        output "#{config[:scheme]}.statsdb.#{config[:database]}.blks_hit", row['blks_hit'], timestamp
+        output "#{config[:scheme]}.statsdb.#{config[:database]}.tup_returned", row['tup_returned'], timestamp
+        output "#{config[:scheme]}.statsdb.#{config[:database]}.tup_fetched", row['tup_fetched'], timestamp
+        output "#{config[:scheme]}.statsdb.#{config[:database]}.tup_inserted", row['tup_inserted'], timestamp
+        output "#{config[:scheme]}.statsdb.#{config[:database]}.tup_updated", row['tup_updated'], timestamp
+        output "#{config[:scheme]}.statsdb.#{config[:database]}.tup_deleted", row['tup_deleted'], timestamp
       end
     end
 

@@ -96,14 +96,14 @@ class PostgresStatsIOMetrics < Sensu::Plugin::Metric::CLI::Graphite
     ]
     con.exec(request.join(' ')) do |result|
       result.each do |row|
-        output "#{config[:scheme]}.statsio.#{config[:db]}.heap_blks_read", row['heap_blks_read'], timestamp
-        output "#{config[:scheme]}.statsio.#{config[:db]}.heap_blks_hit", row['heap_blks_hit'], timestamp
-        output "#{config[:scheme]}.statsio.#{config[:db]}.idx_blks_read", row['idx_blks_read'], timestamp
-        output "#{config[:scheme]}.statsio.#{config[:db]}.idx_blks_hit", row['idx_blks_hit'], timestamp
-        output "#{config[:scheme]}.statsio.#{config[:db]}.toast_blks_read", row['toast_blks_read'], timestamp
-        output "#{config[:scheme]}.statsio.#{config[:db]}.toast_blks_hit", row['toast_blks_hit'], timestamp
-        output "#{config[:scheme]}.statsio.#{config[:db]}.tidx_blks_read", row['tidx_blks_read'], timestamp
-        output "#{config[:scheme]}.statsio.#{config[:db]}.tidx_blks_hit", row['tidx_blks_hit'], timestamp
+        output "#{config[:scheme]}.statsio.#{config[:database]}.heap_blks_read", row['heap_blks_read'], timestamp
+        output "#{config[:scheme]}.statsio.#{config[:database]}.heap_blks_hit", row['heap_blks_hit'], timestamp
+        output "#{config[:scheme]}.statsio.#{config[:database]}.idx_blks_read", row['idx_blks_read'], timestamp
+        output "#{config[:scheme]}.statsio.#{config[:database]}.idx_blks_hit", row['idx_blks_hit'], timestamp
+        output "#{config[:scheme]}.statsio.#{config[:database]}.toast_blks_read", row['toast_blks_read'], timestamp
+        output "#{config[:scheme]}.statsio.#{config[:database]}.toast_blks_hit", row['toast_blks_hit'], timestamp
+        output "#{config[:scheme]}.statsio.#{config[:database]}.tidx_blks_read", row['tidx_blks_read'], timestamp
+        output "#{config[:scheme]}.statsio.#{config[:database]}.tidx_blks_hit", row['tidx_blks_hit'], timestamp
       end
     end
 
