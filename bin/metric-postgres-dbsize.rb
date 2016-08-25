@@ -86,7 +86,7 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
 
     con.exec(request.join(' ')) do |result|
       result.each do |row|
-        output "#{config[:scheme]}.size.#{config[:db]}", row['pg_database_size'], timestamp
+        output "#{config[:scheme]}.size.#{config[:database]}", row['pg_database_size'], timestamp
       end
     end
 

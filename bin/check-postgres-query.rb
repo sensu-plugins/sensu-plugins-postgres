@@ -57,7 +57,7 @@ class CheckPostgresQuery < Sensu::Plugin::Check::CLI
          long: '--port PORT',
          default: 5432
 
-  option :db,
+  option :database,
          description: 'Database name',
          short: '-d DB',
          long: '--db DB',

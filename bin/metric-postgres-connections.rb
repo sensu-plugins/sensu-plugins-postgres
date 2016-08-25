@@ -55,7 +55,7 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
          long: '--port PORT',
          default: 5432
 
-  option :db,
+  option :database,
          description: 'Database name',
          short: '-d DB',
          long: '--db DB',
@@ -82,7 +82,7 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
                          connect_timeout: config[:timeout])
     request = [
       'select count(*), waiting from pg_stat_activity',
-      "where datname = '#{config[:db]}' group by waiting"
+      "where datname = '#{config[:database]}' group by waiting"
     ]
 
     metrics = {
@@ -103,7 +103,7 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
     metrics[:total] = (metrics[:waiting].to_i + metrics[:active].to_i)
 
     metrics.each do |metric, value|
-      output "#{config[:scheme]}.connections.#{config[:db]}.#{metric}", value, timestamp
+      output "#{config[:scheme]}.connections.#{config[:database]}.#{metric}", value, timestamp
     end
 
     ok

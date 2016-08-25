@@ -96,16 +96,16 @@ class PostgresStatsTableMetrics < Sensu::Plugin::Metric::CLI::Graphite
     ]
     con.exec(request.join(' ')) do |result|
       result.each do |row|
-        output "#{config[:scheme]}.statstable.#{config[:db]}.seq_scan", row['seq_scan'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:db]}.seq_tup_read", row['seq_tup_read'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:db]}.idx_scan", row['idx_scan'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:db]}.idx_tup_fetch", row['idx_tup_fetch'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:db]}.n_tup_ins", row['n_tup_ins'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:db]}.n_tup_upd", row['n_tup_upd'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:db]}.n_tup_del", row['n_tup_del'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:db]}.n_tup_hot_upd", row['n_tup_hot_upd'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:db]}.n_live_tup", row['n_live_tup'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:db]}.n_dead_tup", row['n_dead_tup'], timestamp
+        output "#{config[:scheme]}.statstable.#{config[:database]}.seq_scan", row['seq_scan'], timestamp
+        output "#{config[:scheme]}.statstable.#{config[:database]}.seq_tup_read", row['seq_tup_read'], timestamp
+        output "#{config[:scheme]}.statstable.#{config[:database]}.idx_scan", row['idx_scan'], timestamp
+        output "#{config[:scheme]}.statstable.#{config[:database]}.idx_tup_fetch", row['idx_tup_fetch'], timestamp
+        output "#{config[:scheme]}.statstable.#{config[:database]}.n_tup_ins", row['n_tup_ins'], timestamp
+        output "#{config[:scheme]}.statstable.#{config[:database]}.n_tup_upd", row['n_tup_upd'], timestamp
+        output "#{config[:scheme]}.statstable.#{config[:database]}.n_tup_del", row['n_tup_del'], timestamp
+        output "#{config[:scheme]}.statstable.#{config[:database]}.n_tup_hot_upd", row['n_tup_hot_upd'], timestamp
+        output "#{config[:scheme]}.statstable.#{config[:database]}.n_live_tup", row['n_live_tup'], timestamp
+        output "#{config[:scheme]}.statstable.#{config[:database]}.n_dead_tup", row['n_dead_tup'], timestamp
       end
     end
 
