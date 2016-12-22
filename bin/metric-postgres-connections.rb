@@ -81,8 +81,17 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
                          password: config[:password],
                          connect_timeout: config[:timeout])
     request = [
-      'select count(*), waiting from pg_stat_activity',
-      "where datname = '#{config[:database]}' group by waiting"
+      "select case when count(*) = 1 then 'waiting' else",
+      "'case when wait_event_type is null then false else true end' end as wait_col",
+      "from information_schema.columns",
+      "where table_name = 'pg_stat_activity' and table_schema = 'pg_catalog'",
+      "and column_name = 'waiting'"
+    ]
+    wait_col = con.exec(request.join(' ')).first['wait_col']
+    
+    request = [
+      "select count(*), #{wait_col} as waiting from pg_stat_activity",
+      "where datname = '#{config[:database]}' group by #{wait_col}"
     ]
 
     metrics = {
