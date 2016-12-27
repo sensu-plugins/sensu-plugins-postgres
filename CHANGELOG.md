@@ -7,7 +7,11 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Fixed
 - metric-postgres-connections: Handle postgres version 9.6 and above.
 
-### Changed
+### Removed
+- Ruby 1.9.3 and 2.0.0 support
+
+### Added
+- Ruby 2.3.0 support
 - Updated all the scripts to add an optional timeout setting.
 
 ## [0.1.1] - 2016-03-24
