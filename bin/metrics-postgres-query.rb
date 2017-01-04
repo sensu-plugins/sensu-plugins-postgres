@@ -96,7 +96,7 @@ class MetricsPostgresQuery < Sensu::Plugin::Metric::CLI::Graphite
       unknown "Unable to query PostgreSQL: #{e.message}"
     end
 
-    value = if config[:check_tuples]
+    value = if config[:count_tuples]
               res.ntuples
             else
               res.first.values.first
