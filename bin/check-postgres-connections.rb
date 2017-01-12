@@ -117,10 +117,10 @@ class CheckPostgresConnections < Sensu::Plugin::Check::CLI
       end
     else
       message = "PostgreSQL connections at #{current_conns} out of #{max_conns} connections"
-      if current_conns >= config[:warning]
-        warning message
-      elsif current_conns >= config[:critical]
+      if current_conns >= config[:critical]
         critical message
+      elsif current_conns >= config[:warning]
+        warning message
       else
         ok "PostgreSQL connections under threshold: #{current_conns} out of #{max_conns} connections"
       end
