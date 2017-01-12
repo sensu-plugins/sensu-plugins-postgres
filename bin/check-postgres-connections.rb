@@ -108,19 +108,19 @@ class CheckPostgresConnections < Sensu::Plugin::Check::CLI
 
     if config[:use_percentage]
       message = "PostgreSQL connections at #{percent}%, #{current_conns} out of #{max_conns} connections"
-      if percent >= config[:warning]
-        warning message
-      elsif percent >= config[:critical]
+      if percent >= config[:critical]
         critical message
+      elsif percent >= config[:warning]
+        warning message
       else
         ok "PostgreSQL connections under threshold: #{percent}%, #{current_conns} out of #{max_conns} connections"
       end
     else
       message = "PostgreSQL connections at #{current_conns} out of #{max_conns} connections"
-      if current_conns >= config[:warning]
-        warning message
-      elsif current_conns >= config[:critical]
+      if current_conns >= config[:critical]
         critical message
+      elsif current_conns >= config[:warning]
+        warning message
       else
         ok "PostgreSQL connections under threshold: #{current_conns} out of #{max_conns} connections"
       end
