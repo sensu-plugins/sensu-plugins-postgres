@@ -67,7 +67,7 @@ class CheckPostgresConnections < Sensu::Plugin::Check::CLI
   option :warning,
          description: 'Warning threshold number or % of connections. (default: 200 connections)',
          short: '-w WARNING',
-         long: '--warning CRITICAL',
+         long: '--warning WARNING',
          default: 200,
          proc: proc(&:to_i)
 

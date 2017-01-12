@@ -2,12 +2,7 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'date'
-
-if RUBY_VERSION < '2.0.0'
-  require 'sensu-plugins-postgres'
-else
-  require_relative 'lib/sensu-plugins-postgres'
-end
+require_relative 'lib/sensu-plugins-postgres'
 
 Gem::Specification.new do |s|
   s.authors                = ['Sensu-Plugins and contributors']
@@ -33,7 +28,7 @@ Gem::Specification.new do |s|
   s.platform               = Gem::Platform::RUBY
   s.post_install_message   = 'You can use the embedded Ruby by setting EMBEDDED_RUBY=true in /etc/default/sensu'
   s.require_paths          = ['lib']
-  s.required_ruby_version  = '>= 1.9.3'
+  s.required_ruby_version  = '>= 2.1.0'
 
   s.summary                = 'Sensu plugins for postgres'
   s.test_files             = s.files.grep(%r{^(test|spec|features)/})
@@ -50,6 +45,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake',                      '~> 10.0'
   s.add_development_dependency 'redcarpet',                 '~> 3.2'
   s.add_development_dependency 'rspec',                     '~> 3.1'
-  s.add_development_dependency 'rubocop',                   '0.34.2'
+  s.add_development_dependency 'rubocop',                   '~> 0.40.0'
   s.add_development_dependency 'yard',                      '~> 0.8'
 end

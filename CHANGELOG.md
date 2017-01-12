@@ -4,8 +4,21 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
-### Changed
-- Updated all the scripts to add an optional timeout setting.
+
+## [1.0.1] - 2017-01-04
+### Fixed
+- metrics-postgres-query.rb: Fix `count_tuples` option (#23) (@eheydrick)
+
+## [1.0.0] - 2016-12-27
+### Fixed
+- metric-postgres-connections: Handle postgres version 9.6 and above.
+
+### Removed
+- Ruby 1.9.3 and 2.0.0 support
+
+### Added
+- Ruby 2.3.0 support
+- Update all the scripts to add an optional timeout setting.
 
 ## [0.1.1] - 2016-03-24
 ### Added
@@ -53,7 +66,9 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/0.1.1...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.0.1...HEAD
+[1.0.1]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.0.0...1.0.1
+[1.0.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/0.1.1...1.0.0
 [0.1.1]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/0.0.7...0.1.0
 [0.0.7]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/0.0.6...0.0.7
