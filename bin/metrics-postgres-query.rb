@@ -90,6 +90,7 @@ class MetricsPostgresQuery < Sensu::Plugin::Metric::CLI::Graphite
                        dbname: config[:database],
                        user: config[:user],
                        password: config[:password],
+                       port: config[:port],
                        connect_timeout: config[:timeout])
       res = con.exec(config[:query].to_s)
     rescue PG::Error => e

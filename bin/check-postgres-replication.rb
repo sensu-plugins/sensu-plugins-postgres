@@ -98,6 +98,7 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
                              dbname: config[:database],
                              user: config[:user],
                              password: config[:password],
+                             port: config[:port],
                              sslmode: ssl_mode,
                              connect_timeout: config[:timeout])
 

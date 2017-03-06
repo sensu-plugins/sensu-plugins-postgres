@@ -81,6 +81,7 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
                          dbname: config[:database],
                          user: config[:user],
                          password: config[:password],
+                         port: config[:port],
                          connect_timeout: config[:timeout])
     request = [
       'SELECT mode, count(mode) FROM pg_locks',

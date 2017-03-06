@@ -73,6 +73,7 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
                          dbname: 'postgres',
                          user: config[:user],
                          password: config[:password],
+                         port: config[:port],
                          connect_timeout: config[:timeout])
     request = [
       'select checkpoints_timed, checkpoints_req,',

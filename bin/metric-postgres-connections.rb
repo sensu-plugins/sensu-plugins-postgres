@@ -79,6 +79,7 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
                          dbname: config[:database],
                          user: config[:user],
                          password: config[:password],
+                         port: config[:port],
                          connect_timeout: config[:timeout])
     request = [
       "select case when count(*) = 1 then 'waiting' else",

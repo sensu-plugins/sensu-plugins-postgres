@@ -86,6 +86,7 @@ class PostgresStatsTableMetrics < Sensu::Plugin::Metric::CLI::Graphite
                          dbname: config[:database],
                          user: config[:user],
                          password: config[:password],
+                         port: config[:port],
                          connect_timeout: config[:timeout])
     request = [
       'select sum(seq_scan) as seq_scan, sum(seq_tup_read) as seq_tup_read,',

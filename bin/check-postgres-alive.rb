@@ -69,6 +69,7 @@ class CheckPostgres < Sensu::Plugin::Check::CLI
                      dbname: config[:database],
                      user: config[:user],
                      password: config[:password],
+                     port: config[:port],
                      connect_timeout: config[:timeout])
     res = con.exec('select version();')
     info = res.first
