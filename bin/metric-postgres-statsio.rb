@@ -86,6 +86,7 @@ class PostgresStatsIOMetrics < Sensu::Plugin::Metric::CLI::Graphite
                          dbname: config[:database],
                          user: config[:user],
                          password: config[:password],
+                         port: config[:port],
                          connect_timeout: config[:timeout])
     request = [
       'select sum(heap_blks_read) as heap_blks_read, sum(heap_blks_hit) as heap_blks_hit,',

@@ -97,6 +97,7 @@ class CheckPostgresConnections < Sensu::Plugin::Check::CLI
                        dbname: config[:database],
                        user: config[:user],
                        password: config[:password],
+                       port: config[:port],
                        connect_timeout: config[:timeout])
       max_conns = con.exec('SHOW max_connections').getvalue(0, 0).to_i
       current_conns = con.exec('SELECT count(*) from pg_stat_activity').getvalue(0, 0).to_i

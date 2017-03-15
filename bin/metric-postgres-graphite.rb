@@ -82,6 +82,7 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
                              dbname: config[:database],
                              user: config[:user],
                              password: config[:password],
+                             port: config[:port],
                              connect_timeout: config[:timeout])
     res1 = conn_master.exec('SELECT pg_current_xlog_location()').getvalue(0, 0)
     m_segbytes = conn_master.exec('SHOW wal_segment_size').getvalue(0, 0).sub(/\D+/, '').to_i << 20

@@ -4,6 +4,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Fixed
+- check-postgres-alive.rb: Fix connections using a custom port (#25)
+- check-postgres-connections.rb: Fix connections using a custom port (#25)
+- check-postgres-query.rb: Fix connections using a custom port (#25)
+- check-postgres-replication.rb: Fix connections using a custom port (#25)
+- metrics-postgres-connections.rb: Fix connections using a custom port (#25)
+- metrics-postgres-dbsize.rb: Fix connections using a custom port (#25)
+- metrics-postgres-graphite.rb: Fix connections using a custom port (#25)
+- metrics-postgres-locks.rb: Fix connections using a custom port (#25)
+- metrics-postgres-statsgbwriter.rb: Fix connections using a custom port (#25)
+- metrics-postgres-statsdb.rb: Fix connections using a custom port (#25)
+- metrics-postgres-statsio.rb: Fix connections using a custom port (#25)
+- metrics-postgres-statstable.rb: Fix connections using a custom port (#25)
+- metrics-postgres-query.rb: Fix connections using a custom port (#25)
 
 ## [1.0.1] - 2017-01-04
 ### Fixed
