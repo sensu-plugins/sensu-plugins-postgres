@@ -53,7 +53,7 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
          long: '--username=VALUE',
          description: 'Database username'
 
-  option :pass,
+  option :password,
          short: '-p',
          long: '--password=VALUE',
          description: 'Database password'

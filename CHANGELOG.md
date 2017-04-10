@@ -12,6 +12,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 - metrics-postgres-connections.rb: Fix connections using a custom port (#25)
 - metrics-postgres-dbsize.rb: Fix connections using a custom port (#25)
 - metrics-postgres-graphite.rb: Fix connections using a custom port (#25)
+- metrics-postgres-graphite.rb: Fix connections using password
 - metrics-postgres-locks.rb: Fix connections using a custom port (#25)
 - metrics-postgres-statsgbwriter.rb: Fix connections using a custom port (#25)
 - metrics-postgres-statsdb.rb: Fix connections using a custom port (#25)
