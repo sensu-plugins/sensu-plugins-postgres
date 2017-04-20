@@ -5,7 +5,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 ### Fixed
-- metrics-postgres-query.rb: Restored default value to only return first value in query. (@Micasou)
+- metrics-postgres-query.rb: Restored default value to only return first value in query.
 
 ## [1.1.0] - 2017-04-20
 ### Added
