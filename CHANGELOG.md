@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Updated
+- metrics-postgres-query.rb: Added option to return multi row queries.
+
 ### Fixed
 - check-postgres-alive.rb: Fix connections using a custom port (#25)
 - check-postgres-connections.rb: Fix connections using a custom port (#25)

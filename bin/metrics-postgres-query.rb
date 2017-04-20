@@ -78,6 +78,13 @@ class MetricsPostgresQuery < Sensu::Plugin::Metric::CLI::Graphite
          long: '--scheme SCHEME',
          default: 'postgres'
 
+  option :multirow,
+         description: 'Determines if we return first row or all rows',
+         short: '-m',
+         long: '--multirow',
+         boolean: true,
+         default: false
+
   option :timeout,
          description: 'Connection timeout (seconds)',
          short: '-T TIMEOUT',
@@ -100,10 +107,16 @@ class MetricsPostgresQuery < Sensu::Plugin::Metric::CLI::Graphite
     value = if config[:count_tuples]
               res.ntuples
             else
-              res.first.values.first
+              res.values
             end
 
-    output config[:scheme], value
+    if config[:multirow] && !config[:count_tuples]
+      value.each do |row|
+        output "#{config[:scheme]}.#{row[0]}", row[1]
+      end
+    else
+      output config[:scheme], value
+    end
     ok
   end
 end
