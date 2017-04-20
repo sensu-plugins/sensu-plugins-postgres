@@ -5,7 +5,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 
-## [1.1.0] - 2017-02-20
+## [1.1.0] - 2017-04-20
 ### Added
 - metrics-postgres-query.rb: Add option to return multi row queries. (@Micasou)
 
