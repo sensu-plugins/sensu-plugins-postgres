@@ -4,24 +4,25 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
-### Updated
-- metrics-postgres-query.rb: Added option to return multi row queries.
+### Added
+- metrics-postgres-query.rb: Add option to return multi row queries. (@Micasou)
 
 ### Fixed
-- check-postgres-alive.rb: Fix connections using a custom port (#25)
+- check-postgres-alive.rb: Fix connections using a custom port (#25 via @mickfeech)
 - check-postgres-connections.rb: Fix connections using a custom port (#25)
 - check-postgres-query.rb: Fix connections using a custom port (#25)
 - check-postgres-replication.rb: Fix connections using a custom port (#25)
 - metrics-postgres-connections.rb: Fix connections using a custom port (#25)
 - metrics-postgres-dbsize.rb: Fix connections using a custom port (#25)
 - metrics-postgres-graphite.rb: Fix connections using a custom port (#25)
-- metrics-postgres-graphite.rb: Fix connections using password
+- metrics-postgres-graphite.rb: Fix connections using password (@teadur)
 - metrics-postgres-locks.rb: Fix connections using a custom port (#25)
 - metrics-postgres-statsgbwriter.rb: Fix connections using a custom port (#25)
 - metrics-postgres-statsdb.rb: Fix connections using a custom port (#25)
 - metrics-postgres-statsio.rb: Fix connections using a custom port (#25)
 - metrics-postgres-statstable.rb: Fix connections using a custom port (#25)
 - metrics-postgres-query.rb: Fix connections using a custom port (#25)
+- check-postgres-connections.rb: Fix logic to check critical first then warning (#24 via @nevins-b)
 
 ## [1.0.1] - 2017-01-04
 ### Fixed
