@@ -79,9 +79,9 @@ class MetricsPostgresQuery < Sensu::Plugin::Metric::CLI::Graphite
          default: 'postgres'
 
   option :multirow,
-         description: 'Flag to control multiline output',
-         short: '-m MULTIROW',
-         long: '--multirow MULTIROW',
+         description: 'Determines if we return first row or all rows',
+         short: '-m',
+         long: '--multirow',
          boolean: true,
          default: false
 
