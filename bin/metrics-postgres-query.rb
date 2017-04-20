@@ -106,13 +106,17 @@ class MetricsPostgresQuery < Sensu::Plugin::Metric::CLI::Graphite
 
     value = if config[:count_tuples]
               res.ntuples
-            elsif config[:multirow]
-              res.values.each { |row| row.each { |object| object } }
-            else
-              res.first.values.first
+              else
+                res.values
             end
 
-    output config[:scheme], value
+    if config[:multirow] && !config[:count_tuples]
+      value.each do |row|
+        output "#{config[:scheme]}.#{row[0]}", row[1]
+      end
+    else
+      output config[:scheme], value
+    end
     ok
   end
 end
