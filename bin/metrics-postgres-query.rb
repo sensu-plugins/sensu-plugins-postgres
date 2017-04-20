@@ -106,8 +106,8 @@ class MetricsPostgresQuery < Sensu::Plugin::Metric::CLI::Graphite
 
     value = if config[:count_tuples]
               res.ntuples
-              else
-                res.values
+            else
+              res.values
             end
 
     if config[:multirow] && !config[:count_tuples]
