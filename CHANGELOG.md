@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Updated
+- metrics-postgres-query.rb: Added option to return multi row queries.
+
 ### Fixed
 - metrics-postgres-query.rb: Restored default value to only return first value in query. (@Micasou)
 
