@@ -5,6 +5,9 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 
+## [1.1.2] - 2017-06-02
+- check-postgresq-replication.rb: Adds missing option for custom port.
+
 ## [1.1.1] - 2017-04-24
 ### Fixed
 - metrics-postgres-query.rb: Restored default value to only return first value in query. (@Micasou)

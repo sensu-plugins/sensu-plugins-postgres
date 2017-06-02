@@ -17,7 +17,7 @@
 #   gem: pg
 #
 # USAGE:
-#   ./check-postgres-replication.rb -m master_host -s slave_host -d db -u db_user -p db_pass -w warn_threshold -c crit_threshold
+#   ./check-postgres-replication.rb -m master_host -s slave_host -P port -d db -u db_user -p db_pass -w warn_threshold -c crit_threshold
 #
 # NOTES:
 #
@@ -40,6 +40,12 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
          long: '--slave-host=HOST',
          description: 'PostgreSQL slave HOST',
          default: 'localhost')
+
+  option(:port,
+         short: '-P',
+         long: '--port=PORT',
+         description: 'PostgreSQL port',
+         default: 5432)
 
   option(:database,
          short: '-d',
@@ -111,6 +117,7 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
                             dbname: config[:database],
                             user: config[:user],
                             password: config[:password],
+                            port: config[:port],
                             sslmode: ssl_mode,
                             connect_timeout: config[:timeout])
 
