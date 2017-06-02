@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Fixed
+- metrics-postgres-query.rb: Restored default value to only return first value in query.
 
 ## [1.1.2] - 2017-06-02
 ### Fixed
