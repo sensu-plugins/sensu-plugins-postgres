@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Added
+- metric-postgres-statsdb.rb: Adds new metric `numbackends`.
 
 ## [1.1.2] - 2017-06-02
 ### Fixed
