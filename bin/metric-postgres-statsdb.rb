@@ -83,13 +83,14 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
                          port: config[:port],
                          connect_timeout: config[:timeout])
     request = [
-      'select xact_commit, xact_rollback,',
+      'select numbackends, xact_commit, xact_rollback,',
       'blks_read, blks_hit,',
       'tup_returned, tup_fetched, tup_inserted, tup_updated, tup_deleted',
       "from pg_stat_database where datname='#{config[:database]}'"
     ]
     con.exec(request.join(' ')) do |result|
       result.each do |row|
+        output "#{config[:scheme]}.statsdb.#{config[:database]}.numbackends", row['numbackends'], timestamp
         output "#{config[:scheme]}.statsdb.#{config[:database]}.xact_commit", row['xact_commit'], timestamp
         output "#{config[:scheme]}.statsdb.#{config[:database]}.xact_rollback", row['xact_rollback'], timestamp
         output "#{config[:scheme]}.statsdb.#{config[:database]}.blks_read", row['blks_read'], timestamp
