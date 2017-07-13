@@ -100,6 +100,8 @@ class CheckPostgresConnections < Sensu::Plugin::Check::CLI
                        port: config[:port],
                        connect_timeout: config[:timeout])
       max_conns = con.exec('SHOW max_connections').getvalue(0, 0).to_i
+      superuser_conns = con.exec('SHOW superuser_reserved_connections').getvalue(0, 0).to_i
+      available_conns = max_conns - superuser_conns
       current_conns = con.exec('SELECT count(*) from pg_stat_activity').getvalue(0, 0).to_i
     rescue PG::Error => e
       unknown "Unable to query PostgreSQL: #{e.message}"
@@ -108,22 +110,22 @@ class CheckPostgresConnections < Sensu::Plugin::Check::CLI
     percent = (current_conns.to_f / max_conns.to_f * 100).to_i
 
     if config[:use_percentage]
-      message = "PostgreSQL connections at #{percent}%, #{current_conns} out of #{max_conns} connections"
+      message = "PostgreSQL connections at #{percent}%, #{current_conns} out of #{available_conns} connections"
       if percent >= config[:critical]
         critical message
       elsif percent >= config[:warning]
         warning message
       else
-        ok "PostgreSQL connections under threshold: #{percent}%, #{current_conns} out of #{max_conns} connections"
+        ok "PostgreSQL connections under threshold: #{percent}%, #{current_conns} out of #{available_conns} connections"
       end
     else
-      message = "PostgreSQL connections at #{current_conns} out of #{max_conns} connections"
+      message = "PostgreSQL connections at #{current_conns} out of #{available_conns} connections"
       if current_conns >= config[:critical]
         critical message
       elsif current_conns >= config[:warning]
         warning message
       else
-        ok "PostgreSQL connections under threshold: #{current_conns} out of #{max_conns} connections"
+        ok "PostgreSQL connections under threshold: #{current_conns} out of #{available_conns} connections"
       end
     end
   end
