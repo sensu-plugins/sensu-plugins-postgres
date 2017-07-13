@@ -4,9 +4,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
-### Fixed
-- Take into account reserved superuser connections in check-postgres-connections.rb
-
 ## [1.2.0] - 2017-07-12
 ### Added
 - metric-postgres-statsdb.rb: Adds new metric `numbackends`. (@phumpal)
