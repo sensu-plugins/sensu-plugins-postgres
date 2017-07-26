@@ -7,6 +7,9 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Fixed
 - Take into account reserved superuser connections in check-postgres-connections.rb
 
+### Added
+- Ruby 2.4.1 testing
+
 ## [1.2.0] - 2017-07-12
 ### Added
 - metric-postgres-statsdb.rb: Adds new metric `numbackends`. (@phumpal)
