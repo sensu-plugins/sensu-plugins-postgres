@@ -4,8 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+
+## [1.3.0] - 2017-07-25
 ### Fixed
-- Take into account reserved superuser connections in check-postgres-connections.rb
+- Take into account reserved superuser connections in check-postgres-connections.rb (@Evesy)
 
 ### Added
 - Ruby 2.4.1 testing
@@ -104,7 +106,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.2.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.3.0...HEAD
+[1.3.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.2.0...1.3.0
 [1.2.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.1.2...1.2.0
 [1.1.2]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.1.0...1.1.1
