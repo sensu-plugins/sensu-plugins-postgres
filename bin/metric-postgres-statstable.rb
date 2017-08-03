@@ -29,11 +29,18 @@
 #   for details.
 #
 
+require 'sensu-plugins-postgres/pgpass'
 require 'sensu-plugin/metric/cli'
 require 'pg'
 require 'socket'
 
 class PostgresStatsTableMetrics < Sensu::Plugin::Metric::CLI::Graphite
+  option :pgpass,
+         description: 'Pgpass file',
+         short: '-f FILE',
+         long: '--pgpass',
+         default: ENV['PGPASSFILE'] || "#{ENV['HOME']}/.pgpass"
+
   option :user,
          description: 'Postgres User',
          short: '-u USER',
@@ -47,20 +54,17 @@ class PostgresStatsTableMetrics < Sensu::Plugin::Metric::CLI::Graphite
   option :hostname,
          description: 'Hostname to login to',
          short: '-h HOST',
-         long: '--hostname HOST',
-         default: 'localhost'
+         long: '--hostname HOST'
 
   option :port,
          description: 'Database port',
          short: '-P PORT',
-         long: '--port PORT',
-         default: 5432
+         long: '--port PORT'
 
   option :database,
          description: 'Database name',
          short: '-d DB',
-         long: '--db DB',
-         default: 'postgres'
+         long: '--db DB'
 
   option :scope,
          description: 'Scope, see http://www.postgresql.org/docs/9.2/static/monitoring-stats.html',
@@ -79,9 +83,11 @@ class PostgresStatsTableMetrics < Sensu::Plugin::Metric::CLI::Graphite
          long: '--timeout TIMEOUT',
          default: nil
 
+  include Pgpass
+
   def run
     timestamp = Time.now.to_i
-
+    pgpass
     con     = PG.connect(host: config[:hostname],
                          dbname: config[:database],
                          user: config[:user],

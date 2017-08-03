@@ -26,10 +26,17 @@
 #   for details.
 #
 
+require 'sensu-plugins-postgres/pgpass'
 require 'sensu-plugin/check/cli'
 require 'pg'
 
 class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
+  option :pgpass,
+         description: 'Pgpass file',
+         short: '-f FILE',
+         long: '--pgpass',
+         default: ENV['PGPASSFILE'] || "#{ENV['HOME']}/.pgpass"
+
   option(:master_host,
          short: '-m',
          long: '--master-host=HOST',
@@ -44,8 +51,7 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
   option(:port,
          short: '-P',
          long: '--port=PORT',
-         description: 'PostgreSQL port',
-         default: 5432)
+         description: 'PostgreSQL port')
 
   option(:database,
          short: '-d',
@@ -90,6 +96,8 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
          default: nil,
          description: 'Connection timeout (seconds)')
 
+  include Pgpass
+
   def compute_lag(master, slave, m_segbytes)
     m_segment, m_offset = master.split('/')
     s_segment, s_offset = slave.split('/')
@@ -100,6 +108,7 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
     ssl_mode = config[:ssl] ? 'require' : 'prefer'
 
     # Establishing connection to the master
+    pgpass
     conn_master = PG.connect(host: config[:master_host],
                              dbname: config[:database],
                              user: config[:user],

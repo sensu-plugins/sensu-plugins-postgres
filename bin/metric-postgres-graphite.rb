@@ -26,11 +26,18 @@
 #   for details.
 #
 
+require 'sensu-plugins-postgres/pgpass'
 require 'pg'
 require 'sensu-plugin/metric/cli'
 require 'socket'
 
 class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
+  option :pgpass,
+         description: 'Pgpass file',
+         short: '-f FILE',
+         long: '--pgpass',
+         default: ENV['PGPASSFILE'] || "#{ENV['HOME']}/.pgpass"
+
   option :master_host,
          short: '-m',
          long: '--master=HOST',
@@ -45,8 +52,7 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
   option :database,
          short: '-d',
          long: '--database=NAME',
-         description: 'Database NAME',
-         default: 'postgres'
+         description: 'Database NAME'
 
   option :user,
          short: '-u',
@@ -67,8 +73,7 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
   option :port,
          description: 'Database port',
          short: '-P PORT',
-         long: '--port PORT',
-         default: 5432
+         long: '--port PORT'
 
   option :timeout,
          description: 'Connection timeout (seconds)',
@@ -76,8 +81,11 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
          long: '--timeout TIMEOUT',
          default: nil
 
+  include Pgpass
+
   def run
     # Establishing connections to the master
+    pgpass
     conn_master = PG.connect(host: config[:master_host],
                              dbname: config[:database],
                              user: config[:user],
