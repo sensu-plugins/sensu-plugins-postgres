@@ -1,7 +1,7 @@
 module Pgpass
   def pgpass
     if File.file?(config[:pgpass])
-      pgpass = Hash[[:hostname, :port, :database, :user, :password].zip(File.read(config[:pgpass]).strip.split(':'))]
+      pgpass = Hash[[:hostname, :port, :database, :user, :password].zip(File.readlines(config[:pgpass])[0].strip.split(':'))]
       pgpass[:database] = nil if pgpass[:database] == '*'
       pgpass.each do |k, v|
         config[k] ||= v
