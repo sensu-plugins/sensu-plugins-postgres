@@ -27,10 +27,17 @@
 #   for details.
 #
 
+require 'sensu-plugins-postgres/pgpass'
 require 'sensu-plugin/metric/cli'
 require 'pg'
 
 class MetricsPostgresQuery < Sensu::Plugin::Metric::CLI::Graphite
+  option :pgpass,
+         description: 'Pgpass file',
+         short: '-f FILE',
+         long: '--pgpass',
+         default: ENV['PGPASSFILE'] || "#{ENV['HOME']}/.pgpass"
+
   option :user,
          description: 'Postgres User',
          short: '-u USER',
@@ -44,20 +51,17 @@ class MetricsPostgresQuery < Sensu::Plugin::Metric::CLI::Graphite
   option :hostname,
          description: 'Hostname to login to',
          short: '-h HOST',
-         long: '--hostname HOST',
-         default: 'localhost'
+         long: '--hostname HOST'
 
   option :port,
          description: 'Database port',
          short: '-P PORT',
-         long: '--port PORT',
-         default: 5432
+         long: '--port PORT'
 
   option :database,
          description: 'Database name',
          short: '-d DB',
-         long: '--db DB',
-         default: 'postgres'
+         long: '--db DB'
 
   option :query,
          description: 'Database query to execute',
@@ -91,8 +95,11 @@ class MetricsPostgresQuery < Sensu::Plugin::Metric::CLI::Graphite
          long: '--timeout TIMEOUT',
          default: nil
 
+  include Pgpass
+
   def run
     begin
+      pgpass
       con = PG.connect(host: config[:hostname],
                        dbname: config[:database],
                        user: config[:user],

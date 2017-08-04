@@ -27,10 +27,17 @@
 #   for details.
 #
 
+require 'sensu-plugins-postgres/pgpass'
 require 'sensu-plugin/check/cli'
 require 'pg'
 
 class CheckPostgres < Sensu::Plugin::Check::CLI
+  option :pgpass,
+         description: 'Pgpass file',
+         short: '-f FILE',
+         long: '--pgpass',
+         default: ENV['PGPASSFILE'] || "#{ENV['HOME']}/.pgpass"
+
   option :user,
          description: 'Postgres User',
          short: '-u USER',
@@ -49,14 +56,12 @@ class CheckPostgres < Sensu::Plugin::Check::CLI
   option :database,
          description: 'Database schema to connect to',
          short: '-d DATABASE',
-         long: '--database DATABASE',
-         default: 'test'
+         long: '--database DATABASE'
 
   option :port,
          description: 'Database port',
          short: '-P PORT',
-         long: '--port PORT',
-         default: 5432
+         long: '--port PORT'
 
   option :timeout,
          description: 'Connection timeout (seconds)',
@@ -64,7 +69,10 @@ class CheckPostgres < Sensu::Plugin::Check::CLI
          long: '--timeout TIMEOUT',
          default: nil
 
+  include Pgpass
+
   def run
+    pgpass
     con = PG.connect(host: config[:hostname],
                      dbname: config[:database],
                      user: config[:user],
