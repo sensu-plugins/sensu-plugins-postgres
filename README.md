@@ -43,11 +43,12 @@ CheckPostgresReplicationStatus OK: replication delayed by 0.0MB :: master:B0/B40
 
 ### Check number of connections
 ```
-$ check-postgres-connections.rb -a -w 80 -c 90 -d template1 -f /var/lib/postgresql/.pgpass
+$ export PGPASSWORD=this-is-secret-password
+$ check-postgres-connections.rb -a -w 80 -c 90 -d template1 -u sensu
 CheckPostgresConnections OK: PostgreSQL connections under threshold: 17%, 174 out of 997 connections
 ```
 
-### Defaults values
+### Default values
 
 | Argument       | Env variable | Value     |
 |----------------|--------------|-----------|
