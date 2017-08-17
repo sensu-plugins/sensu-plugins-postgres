@@ -85,6 +85,14 @@ You can ovveride `pgpass` values with command line arguments, e.g. `-h` for host
 gem install sensu-plugins-postgres
 ```
 
+## Centos installation
+
+```
+yum -y install gcc ruby-devel rubygems  postgresql-devel
+sensu-install -p sensu-plugins-postgres
+
+```
+
 See [Installation and Setup](http://sensu-plugins.io/docs/installation_instructions.html) for details.
 
 ### Known issues
