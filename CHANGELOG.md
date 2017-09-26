@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Fixed
+- metrics-postgres-query.rb: Add a nil check to avoid failure when the query result is empty (@eheydrick)
 
 ## [1.4.0] - 2017-08-04
 ### Added
