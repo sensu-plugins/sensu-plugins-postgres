@@ -90,15 +90,15 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
                          port: config[:port],
                          connect_timeout: config[:timeout])
     request = [
-      'SELECT mode, count(mode) FROM pg_locks',
-      "where database = (select oid from pg_database where datname = '#{config[:database]}')",
-      'group by mode'
+      'SELECT mode, count(mode) AS count FROM pg_locks',
+      "WHERE database = (SELECT oid FROM pg_database WHERE datname = '#{config[:database]}')",
+      'GROUP BY mode'
     ]
 
     con.exec(request.join(' ')) do |result|
       result.each do |row|
         lock_name = row['mode'].downcase.to_sym
-        locks_per_type[lock_name] += 1
+        locks_per_type[lock_name] = row['count']
       end
     end
 
