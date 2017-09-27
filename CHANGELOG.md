@@ -5,8 +5,9 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+## [1.4.2] - 2017-09-27
 ### Fixed
-- metric-postgres-locks.rb: Fixed lock count collect (@madboxkr)
+- metric-postgres-locks.rb: Fix lock count collection (@madboxkr)
 
 ## [1.4.1] - 2017-09-26
 ### Fixed
@@ -121,7 +122,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.1...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.2...HEAD
+[1.4.2]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.1...1.4.2
 [1.4.1]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.0...1.4.1
 [1.4.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.2.0...1.3.0
