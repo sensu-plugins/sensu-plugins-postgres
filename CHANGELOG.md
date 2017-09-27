@@ -5,6 +5,9 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+### Fixed
+- metric-postgres-locks.rb: Fixed lock count collect (@madboxkr)
+
 ## [1.4.1] - 2017-09-26
 ### Fixed
 - metrics-postgres-query.rb: Add a nil check to avoid failure when the query result is empty (@eheydrick)
