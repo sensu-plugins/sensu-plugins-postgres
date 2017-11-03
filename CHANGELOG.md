@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
+### Fixed
+- check-postgres-replication.rb: maintains backwards compatibility with <= 9.6 and adds compatibility for >= 10
 
 ## [1.4.2] - 2017-09-27
 ### Fixed
