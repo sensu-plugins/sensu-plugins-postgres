@@ -117,13 +117,13 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
                              sslmode: ssl_mode,
                              connect_timeout: config[:timeout])
 
-    pg_vsn = conn_master.exec("SELECT current_setting('server_version')").getvalue(0,0)
-    master = 
-      if Gem::Version.new(pg_vsn) > Gem::Version.new('9.6')
-        conn_master.exec('SELECT pg_current_wal_lsn()').getvalue(0, 0)
-      else
-        conn_master.exec('SELECT pg_current_xlog_location()').getvalue(0, 0)
-      end
+    pg_vsn = conn_master.exec("SELECT current_setting('server_version')").getvalue(0, 0)
+
+    master = if Gem::Version.new(pg_vsn) > Gem::Version.new('9.6')
+               conn_master.exec('SELECT pg_current_wal_lsn()').getvalue(0, 0)
+             else
+               conn_master.exec('SELECT pg_current_xlog_location()').getvalue(0, 0)
+             end
     m_segbytes = conn_master.exec('SHOW wal_segment_size').getvalue(0, 0).sub(/\D+/, '').to_i << 20
     conn_master.close
 
@@ -136,12 +136,11 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
                             sslmode: ssl_mode,
                             connect_timeout: config[:timeout])
 
-    slave = 
-      if Gem::Version.new(pg_vsn) > Gem::Version.new('9.6')
-        conn_slave.exec('SELECT pg_last_wal_replay_lsn()').getvalue(0, 0)
-      else
-        conn_slave.exec('SELECT pg_last_xlog_receive_location()').getvalue(0, 0)
-      end
+    slave = if Gem::Version.new(pg_vsn) > Gem::Version.new('9.6')
+              conn_slave.exec('SELECT pg_last_wal_replay_lsn()').getvalue(0, 0)
+            else
+              conn_slave.exec('SELECT pg_last_xlog_receive_location()').getvalue(0, 0)
+            end
     conn_slave.close
 
     # Computing lag
