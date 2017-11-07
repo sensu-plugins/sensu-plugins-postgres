@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
+
+## [1.4.3] - 2017-11-06
 ### Fixed
 - check-postgres-replication.rb: maintains backwards compatibility with <= 9.6 and adds compatibility for >= 10
 
@@ -124,7 +126,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.2...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.3...HEAD
+[1.4.3]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.2...1.4.3
 [1.4.2]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.1...1.4.2
 [1.4.1]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.0...1.4.1
 [1.4.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.3.0...1.4.0
