@@ -5,11 +5,13 @@ require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 require 'yard'
 require 'yard/rake/yardoc_task'
+require 'English'
+require 'kitchen/rake_tasks'
 
 YARD::Rake::YardocTask.new do |t|
-  OTHER_PATHS = %w().freeze
+  OTHER_PATHS = %w[].freeze
   t.files = ['lib/**/*.rb', 'bin/**/*.rb', OTHER_PATHS]
-  t.options = %w(--markup-provider=redcarpet --markup=markdown --main=README.md --files CHANGELOG.md)
+  t.options = %w[--markup-provider=redcarpet --markup=markdown --main=README.md --files CHANGELOG.md]
 end
 
 RuboCop::RakeTask.new
@@ -35,4 +37,10 @@ task :check_binstubs do
   end
 end
 
-task default: [:spec, :make_bin_executable, :yard, :rubocop, :check_binstubs]
+Kitchen::RakeTasks.new
+
+desc 'Alias for kitchen:all'
+task integration: 'kitchen:all'
+
+task default: %i[spec make_bin_executable yard rubocop check_binstubs integration]
+task quick: %i[make_bin_executable yard rubocop check_binstubs]
