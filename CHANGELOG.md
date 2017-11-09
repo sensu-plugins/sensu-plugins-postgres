@@ -5,6 +5,10 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+### Added
+- basic skel for integration testing with postgres (@majormoses)
+- added test for `./bin/check-postgres-alive.rb`
+
 ## [1.4.4] - 2017-11-08
 ### Fixed
 - check-postgres-replication.rb: fix 9.x compatibility

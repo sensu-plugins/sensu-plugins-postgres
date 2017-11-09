@@ -1,6 +1,11 @@
+sudo: true
+service: docker
 language: ruby
 cache:
 - bundler
+before_install:
+  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
+  - gem install bundler -v 1.15
 install:
 - bundle install
 rvm:
@@ -14,8 +19,12 @@ notifications:
     - sensu-plugin@sensu-plugins.io
     on_success: change
     on_failure: always
+before_script:
+  - docker run --name sensu-postgres-10 -e POSTGRES_PASSWORD='<REDACTED>' -d postgres
+
 script:
-- bundle exec rake default
+- bundle exec rake quick
+- bundle exec rake kitchen:ruby-`echo $TRAVIS_RUBY_VERSION | sed -e "s/\.//g"`-debian-8
 - gem build sensu-plugins-postgres.gemspec
 - gem install sensu-plugins-postgres-*.gem
 deploy:
