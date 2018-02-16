@@ -5,6 +5,9 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+### Fixed
+- metric-postgres-graphite.rb: use the custom defined port when connecting to slave (@henkjan)
+
 ### Added
 - basic skel for integration testing with postgres (@majormoses)
 - added test for `./bin/check-postgres-alive.rb`
