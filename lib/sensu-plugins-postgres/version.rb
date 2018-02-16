@@ -2,7 +2,7 @@ module SensuPluginsPostgres
   module Version
     MAJOR = 1
     MINOR = 4
-    PATCH = 4
+    PATCH = 5
 
     VER_STRING = [MAJOR, MINOR, PATCH].compact.join('.')
   end

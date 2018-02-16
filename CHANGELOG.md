@@ -5,6 +5,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+## [1.4.5] - 2018-02-15
 ### Fixed
 - metric-postgres-graphite.rb: use the custom defined port when connecting to slave (@henkjan)
 
@@ -137,7 +138,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.4...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.5...HEAD
+[1.4.5]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.4...1.4.5
 [1.4.4]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.3...1.4.4
 [1.4.3]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.2...1.4.3
 [1.4.2]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.1...1.4.2
