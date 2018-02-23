@@ -15,6 +15,11 @@ source /etc/profile
 DATA_DIR=/tmp/kitchen/data
 RUBY_HOME=${MY_RUBY_HOME}
 
+# setup a .pgpass file
+cat << EOF > /tmp/.pgpass
+*:5432:*:postgres:<REDACTED>
+EOF
+
 # Start bootatraping
 
 ## install some required deps for pg_gem to install

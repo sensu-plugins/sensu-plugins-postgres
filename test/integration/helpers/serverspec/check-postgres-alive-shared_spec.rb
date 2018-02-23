@@ -23,3 +23,8 @@ describe command("#{check} --user #{pg_user} --password \'#{pg_password}\' --hos
   its(:exit_status) { should eq 0 }
   its(:stdout) { should match(/CheckPostgres OK: Server version: {"version"=>"PostgreSQL/) }
 end
+
+describe command("#{check} --hostname #{pg_host} --pgpass /tmp/.pgpass") do
+  its(:exit_status) { should eq 0 }
+  its(:stdout) { should match(/CheckPostgres OK: Server version: {"version"=>"PostgreSQL/) }
+end

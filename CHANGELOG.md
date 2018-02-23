@@ -5,6 +5,9 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+### Added
+- tests for connecting with a pgpass file (@majormoses)
+
 ## [1.4.5] - 2018-02-15
 ### Fixed
 - metric-postgres-graphite.rb: use the custom defined port when connecting to slave (@henkjan)
