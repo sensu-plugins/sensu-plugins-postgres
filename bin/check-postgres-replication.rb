@@ -106,6 +106,7 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
 
   def check_vsn(conn)
     pg_vsn = conn.exec("SELECT current_setting('server_version')").getvalue(0, 0)
+    pg_vsn = pg_vsn.split(' ')[0]
     Gem::Version.new(pg_vsn) < Gem::Version.new('10.0') && Gem::Version.new(pg_vsn) >= Gem::Version.new('9.0')
   end
 
