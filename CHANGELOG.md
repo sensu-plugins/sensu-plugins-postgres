@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
+
+## [1.4.6] - 2018-05-03
 ### Fixed
 - version number check for build strings such as `10.3 (Ubuntu 10.3-1.pgdg16.04+1)`
 
@@ -143,7 +145,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.5...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.6...HEAD
+[1.4.6]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.5...1.4.6
 [1.4.5]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.4...1.4.5
 [1.4.4]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.3...1.4.4
 [1.4.3]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.2...1.4.3
