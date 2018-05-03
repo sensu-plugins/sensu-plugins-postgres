@@ -60,6 +60,11 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
          short: '-P PORT',
          long: '--port PORT'
 
+  option :database,
+         description: 'Database name',
+         short: '-d DB',
+         long: '--db DB'
+
   option :scheme,
          description: 'Metric naming scheme, text to prepend to $queue_name.$metric',
          long: '--scheme SCHEME',
@@ -91,13 +96,13 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
     ]
     con.exec(request.join(' ')) do |result|
       result.each do |row|
-        output "#{config[:scheme]}.bgwriter.checkpoints_timed", row['checkpoints_timed'], timestamp
-        output "#{config[:scheme]}.bgwriter.checkpoints_req", row['checkpoints_req'], timestamp
-        output "#{config[:scheme]}.bgwriter.buffers_checkpoint", row['buffers_checkpoint'], timestamp
-        output "#{config[:scheme]}.bgwriter.buffers_clean", row['buffers_clean'], timestamp
-        output "#{config[:scheme]}.bgwriter.maxwritten_clean", row['maxwritten_clean'], timestamp
-        output "#{config[:scheme]}.bgwriter.buffers_backend", row['buffers_backend'], timestamp
-        output "#{config[:scheme]}.bgwriter.buffers_alloc", row['buffers_alloc'], timestamp
+        output "#{config[:scheme]}.bgwriter.#{config[:database]}.checkpoints_timed", row['checkpoints_timed'], timestamp
+        output "#{config[:scheme]}.bgwriter.#{config[:database]}.checkpoints_req", row['checkpoints_req'], timestamp
+        output "#{config[:scheme]}.bgwriter.#{config[:database]}.buffers_checkpoint", row['buffers_checkpoint'], timestamp
+        output "#{config[:scheme]}.bgwriter.#{config[:database]}.buffers_clean", row['buffers_clean'], timestamp
+        output "#{config[:scheme]}.bgwriter.#{config[:database]}.maxwritten_clean", row['maxwritten_clean'], timestamp
+        output "#{config[:scheme]}.bgwriter.#{config[:database]}.buffers_backend", row['buffers_backend'], timestamp
+        output "#{config[:scheme]}.bgwriter.#{config[:database]}.buffers_alloc", row['buffers_alloc'], timestamp
       end
     end
 
