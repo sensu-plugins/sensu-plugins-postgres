@@ -104,7 +104,7 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
                              password: config[:password],
                              port: config[:port],
                              connect_timeout: config[:timeout])
-   master = if check_vsn(conn_master)
+    master = if check_vsn(conn_master)
               conn_master.exec('SELECT pg_current_xlog_location()').getvalue(0, 0)
             else
               conn_master.exec('SELECT pg_current_wal_lsn()').getvalue(0, 0)
