@@ -4,10 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
+### Fixed
+- replication status function names for postgres v10 in `bin/metric-postgres-graphite.rb` (@jfineberg)
 
 ## [1.4.6] - 2018-05-03
 ### Fixed
-- version number check for build strings such as `10.3 (Ubuntu 10.3-1.pgdg16.04+1)`
+- version number check for build strings such as `10.3 (Ubuntu 10.3-1.pgdg16.04+1)` (@jfineberg)
 
 ### Added
 - tests for connecting with a pgpass file (@majormoses)

@@ -83,6 +83,18 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
 
   include Pgpass
 
+  def compute_lag(master, slave, m_segbytes)
+    m_segment, m_offset = master.split('/')
+    s_segment, s_offset = slave.split('/')
+    ((m_segment.hex - s_segment.hex) * m_segbytes) + (m_offset.hex - s_offset.hex)
+  end
+
+  def check_vsn(conn)
+    pg_vsn = conn.exec("SELECT current_setting('server_version')").getvalue(0, 0)
+    pg_vsn = pg_vsn.split(' ')[0]
+    Gem::Version.new(pg_vsn) < Gem::Version.new('10.0') && Gem::Version.new(pg_vsn) >= Gem::Version.new('9.0')
+  end
+
   def run
     # Establishing connections to the master
     pgpass
@@ -92,15 +104,13 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
                              password: config[:password],
                              port: config[:port],
                              connect_timeout: config[:timeout])
-    res1 = conn_master.exec('SELECT pg_current_xlog_location()').getvalue(0, 0)
+   master = if check_vsn(conn_master)
+              conn_master.exec('SELECT pg_current_xlog_location()').getvalue(0, 0)
+            else
+              conn_master.exec('SELECT pg_current_wal_lsn()').getvalue(0, 0)
+            end
     m_segbytes = conn_master.exec('SHOW wal_segment_size').getvalue(0, 0).sub(/\D+/, '').to_i << 20
     conn_master.close
-
-    def lag_compute(res1, res, m_segbytes) # rubocop:disable NestedMethodDefinition
-      m_segment, m_offset = res1.split(/\//)
-      s_segment, s_offset = res.split(/\//)
-      ((m_segment.hex - s_segment.hex) * m_segbytes) + (m_offset.hex - s_offset.hex)
-    end
 
     # Establishing connections to the slave
     conn_slave = PG.connect(host: config[:slave_host],
@@ -109,11 +119,15 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
                             password: config[:password],
                             port: config[:port],
                             connect_timeout: config[:timeout])
-    res = conn_slave.exec('SELECT pg_last_xlog_receive_location()').getvalue(0, 0)
+    slave = if check_vsn(conn_slave)
+              conn_slave.exec('SELECT pg_last_xlog_receive_location()').getvalue(0, 0)
+            else
+              conn_slave.exec('SELECT pg_last_wal_replay_lsn()').getvalue(0, 0)
+            end
     conn_slave.close
 
     # Compute lag
-    lag = lag_compute(res1, res, m_segbytes)
+    lag = compute_lag(master, slave, m_segbytes)
     output config[:scheme].to_s, lag
 
     ok
