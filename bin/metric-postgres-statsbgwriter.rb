@@ -84,8 +84,9 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
                          connect_timeout: config[:timeout])
     request = [
       'select checkpoints_timed, checkpoints_req,',
+      'checkpoint_write_time, checkpoint_sync_time,',
       'buffers_checkpoint, buffers_clean,',
-      'maxwritten_clean, buffers_backend,',
+      'maxwritten_clean, buffers_backend, buffers_backend_fsync',
       'buffers_alloc',
       'from pg_stat_bgwriter'
     ]
@@ -93,10 +94,13 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
       result.each do |row|
         output "#{config[:scheme]}.bgwriter.checkpoints_timed", row['checkpoints_timed'], timestamp
         output "#{config[:scheme]}.bgwriter.checkpoints_req", row['checkpoints_req'], timestamp
+        output "#{config[:scheme]}.bgwriter.checkpoints_write_time", row['checkpoint_write_time'], timestamp
+        output "#{config[:scheme]}.bgwriter.checkpoints_sync_time", row['checkpoint_sync_time'], timestamp
         output "#{config[:scheme]}.bgwriter.buffers_checkpoint", row['buffers_checkpoint'], timestamp
         output "#{config[:scheme]}.bgwriter.buffers_clean", row['buffers_clean'], timestamp
         output "#{config[:scheme]}.bgwriter.maxwritten_clean", row['maxwritten_clean'], timestamp
         output "#{config[:scheme]}.bgwriter.buffers_backend", row['buffers_backend'], timestamp
+        output "#{config[:scheme]}.bgwriter.buffers_backend_fsync", row['buffers_backend_fsync'], timestamp
         output "#{config[:scheme]}.bgwriter.buffers_alloc", row['buffers_alloc'], timestamp
       end
     end
