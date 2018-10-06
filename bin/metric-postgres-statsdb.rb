@@ -29,6 +29,7 @@
 #   for details.
 #
 
+require 'active_support/core_ext/hash'
 require 'sensu-plugins-postgres/pgpass'
 require 'sensu-plugin/metric/cli'
 require 'pg'
@@ -89,23 +90,14 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
                          port: config[:port],
                          connect_timeout: config[:timeout])
     request = [
-      'select numbackends, xact_commit, xact_rollback,',
-      'blks_read, blks_hit,',
-      'tup_returned, tup_fetched, tup_inserted, tup_updated, tup_deleted',
+      'select *',
       "from pg_stat_database where datname='#{config[:database]}'"
     ]
     con.exec(request.join(' ')) do |result|
       result.each do |row|
-        output "#{config[:scheme]}.statsdb.#{config[:database]}.numbackends", row['numbackends'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:database]}.xact_commit", row['xact_commit'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:database]}.xact_rollback", row['xact_rollback'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:database]}.blks_read", row['blks_read'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:database]}.blks_hit", row['blks_hit'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:database]}.tup_returned", row['tup_returned'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:database]}.tup_fetched", row['tup_fetched'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:database]}.tup_inserted", row['tup_inserted'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:database]}.tup_updated", row['tup_updated'], timestamp
-        output "#{config[:scheme]}.statsdb.#{config[:database]}.tup_deleted", row['tup_deleted'], timestamp
+        row.except('datid', 'stats_reset').each do |key, value|
+          output "#{config[:scheme]}.statsdb.#{config[:database]}.#{key}", value.to_s, timestamp
+        end
       end
     end
 
