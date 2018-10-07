@@ -27,6 +27,7 @@
 #
 
 require 'sensu-plugins-postgres/pgpass'
+require 'sensu-plugins-postgres/pgutil'
 require 'sensu-plugin/check/cli'
 require 'pg'
 
@@ -97,18 +98,7 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
          description: 'Connection timeout (seconds)')
 
   include Pgpass
-
-  def compute_lag(master, slave, m_segbytes)
-    m_segment, m_offset = master.split('/')
-    s_segment, s_offset = slave.split('/')
-    ((m_segment.hex - s_segment.hex) * m_segbytes) + (m_offset.hex - s_offset.hex)
-  end
-
-  def check_vsn(conn)
-    pg_vsn = conn.exec("SELECT current_setting('server_version')").getvalue(0, 0)
-    pg_vsn = pg_vsn.split(' ')[0]
-    Gem::Version.new(pg_vsn) < Gem::Version.new('10.0') && Gem::Version.new(pg_vsn) >= Gem::Version.new('9.0')
-  end
+  include PgUtil
 
   def run
     ssl_mode = config[:ssl] ? 'require' : 'prefer'
