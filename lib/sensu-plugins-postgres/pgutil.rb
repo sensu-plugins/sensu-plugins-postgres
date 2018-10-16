@@ -1,5 +1,5 @@
 module PgUtil
-  def check_vsn(conn)
+  def check_vsn_newer_than_postgres9(conn)
     pg_vsn = conn.exec("SELECT current_setting('server_version')").getvalue(0, 0)
     pg_vsn = pg_vsn.split(' ')[0]
     Gem::Version.new(pg_vsn) < Gem::Version.new('10.0') && Gem::Version.new(pg_vsn) >= Gem::Version.new('9.0')

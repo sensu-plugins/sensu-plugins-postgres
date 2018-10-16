@@ -113,7 +113,7 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
                              sslmode: ssl_mode,
                              connect_timeout: config[:timeout])
 
-    master = if check_vsn(conn_master)
+    master = if check_vsn_newer_than_postgres9(conn_master)
                conn_master.exec('SELECT pg_current_xlog_location()').getvalue(0, 0)
              else
                conn_master.exec('SELECT pg_current_wal_lsn()').getvalue(0, 0)
@@ -130,7 +130,7 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
                             sslmode: ssl_mode,
                             connect_timeout: config[:timeout])
 
-    slave = if check_vsn(conn_slave)
+    slave = if check_vsn_newer_than_postgres9(conn_slave)
               conn_slave.exec('SELECT pg_last_xlog_receive_location()').getvalue(0, 0)
             else
               conn_slave.exec('SELECT pg_last_wal_replay_lsn()').getvalue(0, 0)
