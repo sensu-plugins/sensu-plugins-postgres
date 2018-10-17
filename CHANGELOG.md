@@ -4,12 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
+
+## [2.1.0] - 2018-10-16
 ### Added
-- Moves check_vsn and compute_lag to library method
+- Moves check_vsn and compute_lag to library method (@phumpal)
 
 ## [2.0.0] - 2018-10-15
 ### Breaking Changes
-- Remove unsupported Rubies: `< 2.3.0`
+- Remove unsupported Rubies: `< 2.3.0` (@phumpal)
 
 ## [1.4.6] - 2018-05-03
 ### Fixed
@@ -151,7 +153,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.0.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.1.0...HEAD
+[2.1.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.6...2.0.0
 [1.4.6]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.5...1.4.6
 [1.4.5]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/1.4.4...1.4.5
