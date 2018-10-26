@@ -29,7 +29,6 @@
 #   for details.
 #
 
-require 'active_support/core_ext/hash'
 require 'sensu-plugins-postgres/pgpass'
 require 'sensu-plugin/metric/cli'
 require 'pg'
@@ -95,7 +94,8 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
     ]
     con.exec(request.join(' ')) do |result|
       result.each do |row|
-        row.except('datid', 'stats_reset').each do |key, value|
+        row.each do |key, value|
+          next if %w[datid stats_reset].include?(key)
           output "#{config[:scheme]}.statsdb.#{config[:database]}.#{key}", value.to_s, timestamp
         end
       end
