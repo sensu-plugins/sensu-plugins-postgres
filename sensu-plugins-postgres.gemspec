@@ -36,7 +36,7 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength
 
   s.add_runtime_dependency 'sensu-plugin', '~> 1.2'
 
-  s.add_runtime_dependency 'dentaku',      '2.0.4'
+  s.add_runtime_dependency 'dentaku',      '= 3.2.1'
   s.add_runtime_dependency 'pg',           '0.18.3'
 
   s.add_development_dependency 'bundler',                   '~> 1.7'
