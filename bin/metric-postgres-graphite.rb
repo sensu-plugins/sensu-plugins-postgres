@@ -89,6 +89,7 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
          default: nil
 
   include Pgpass
+  include PgUtil
 
   def run
     ssl_mode = config[:ssl] ? 'require' : 'prefer'
