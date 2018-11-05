@@ -27,8 +27,9 @@
 #
 
 require 'sensu-plugins-postgres/pgpass'
-require 'pg'
+require 'sensu-plugins-postgres/pgutil'
 require 'sensu-plugin/metric/cli'
+require 'pg'
 require 'socket'
 
 class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
@@ -64,6 +65,12 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
          long: '--password=VALUE',
          description: 'Database password'
 
+  option :ssl,
+         short: '-S',
+         long: '--ssl',
+         boolean: true,
+         description: 'Require SSL'
+
   option :scheme,
          description: 'Metric naming scheme, text to prepend to metric',
          short: '-g SCHEME',
@@ -84,6 +91,8 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
   include Pgpass
 
   def run
+    ssl_mode = config[:ssl] ? 'require' : 'prefer'
+
     # Establishing connections to the master
     pgpass
     conn_master = PG.connect(host: config[:master_host],
@@ -91,16 +100,16 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
                              user: config[:user],
                              password: config[:password],
                              port: config[:port],
+                             sslmode: ssl_mode,
                              connect_timeout: config[:timeout])
-    res1 = conn_master.exec('SELECT pg_current_xlog_location()').getvalue(0, 0)
+
+    master = if check_vsn_newer_than_postgres9(conn_master)
+               conn_master.exec('SELECT pg_current_xlog_location()').getvalue(0, 0)
+             else
+               conn_master.exec('SELECT pg_current_wal_lsn()').getvalue(0, 0)
+             end
     m_segbytes = conn_master.exec('SHOW wal_segment_size').getvalue(0, 0).sub(/\D+/, '').to_i << 20
     conn_master.close
-
-    def lag_compute(res1, res, m_segbytes) # rubocop:disable NestedMethodDefinition
-      m_segment, m_offset = res1.split(/\//)
-      s_segment, s_offset = res.split(/\//)
-      ((m_segment.hex - s_segment.hex) * m_segbytes) + (m_offset.hex - s_offset.hex)
-    end
 
     # Establishing connections to the slave
     conn_slave = PG.connect(host: config[:slave_host],
@@ -108,12 +117,18 @@ class CheckpostgresReplicationStatus < Sensu::Plugin::Metric::CLI::Graphite
                             user: config[:user],
                             password: config[:password],
                             port: config[:port],
+                            sslmode: ssl_mode,
                             connect_timeout: config[:timeout])
-    res = conn_slave.exec('SELECT pg_last_xlog_receive_location()').getvalue(0, 0)
+
+    slave = if check_vsn_newer_than_postgres9(conn_slave)
+              conn_slave.exec('SELECT pg_last_xlog_receive_location()').getvalue(0, 0)
+            else
+              conn_slave.exec('SELECT pg_last_wal_replay_lsn()').getvalue(0, 0)
+            end
     conn_slave.close
 
     # Compute lag
-    lag = lag_compute(res1, res, m_segbytes)
+    lag = compute_lag(master, slave, m_segbytes)
     output config[:scheme].to_s, lag
 
     ok
