@@ -62,9 +62,17 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
          long: '--port PORT'
 
   option :database,
-         description: 'Database name',
+         description: 'Database to connect on',
          short: '-d DB',
-         long: '--db DB'
+         long: '--db DB',
+         default: 'postgres'
+
+  option :all_databases,
+         description: 'Get stats for all the databases instead of only the one we are connected on.',
+         short: '-a',
+         long: '--all-databases',
+         boolean: true,
+         default: false
 
   option :scheme,
          description: 'Metric naming scheme, text to prepend to $queue_name.$metric',
@@ -82,21 +90,28 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
   def run
     timestamp = Time.now.to_i
     pgpass
-    con     = PG.connect(host: config[:hostname],
-                         dbname: config[:database],
-                         user: config[:user],
-                         password: config[:password],
-                         port: config[:port],
-                         connect_timeout: config[:timeout])
-    request = [
-      'select *',
-      "from pg_stat_database where datname='#{config[:database]}'"
-    ]
-    con.exec(request.join(' ')) do |result|
+    con = PG.connect(host: config[:hostname],
+                     dbname: config[:database],
+                     user: config[:user],
+                     password: config[:password],
+                     port: config[:port],
+                     connect_timeout: config[:timeout])
+
+    query = 'SELECT * FROM pg_stat_database'
+    params = []
+    unless config[:all_databases]
+      query += ' WHERE datname = $1'
+      params.append config[:database]
+    end
+
+    con.exec_params(query, params) do |result|
       result.each do |row|
+        database = row['datname']
+
         row.each do |key, value|
-          next if %w[datid stats_reset].include?(key)
-          output "#{config[:scheme]}.statsdb.#{config[:database]}.#{key}", value.to_s, timestamp
+          next if %w[datid datname stats_reset].include?(key)
+
+          output "#{config[:scheme]}.statsdb.#{database}.#{key}", value.to_s, timestamp
         end
       end
     end
