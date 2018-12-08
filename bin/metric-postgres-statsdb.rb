@@ -68,7 +68,7 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
          default: 'postgres'
 
   option :all_databases,
-         description: 'Get stats for all the databases instead of only the one we are connected on.',
+         description: 'Get stats for all available databases',
          short: '-a',
          long: '--all-databases',
          boolean: true,

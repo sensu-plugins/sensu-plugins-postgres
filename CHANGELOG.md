@@ -4,8 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
+
+## [2.3.0] - 2018-12-08
 ### Added
-- metric-postgres-statsdb.rb: Add --all-databases option.
+- metric-postgres-statsdb.rb: Add --all-databases option. (@cyrilgdn)
 
 ## [2.2.2] - 2018-10-27
 ### Fixed
@@ -168,7 +170,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.2.2...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.3.0...HEAD
+[2.3.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.2.2...2.3.0
 [2.2.2]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.2.1...2.2.2
 [2.2.1]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.1.0...2.2.0
