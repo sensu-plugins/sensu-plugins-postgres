@@ -101,7 +101,7 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
     params = []
     unless config[:all_databases]
       query += ' WHERE datname = $1'
-      params.append config[:database]
+      params.push config[:database]
     end
 
     con.exec_params(query, params) do |result|
