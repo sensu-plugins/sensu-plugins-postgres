@@ -18,6 +18,7 @@
 #
 # USAGE:
 #   ./metric-postgres-statsdb.rb -u db_user -p db_pass -h db_host -d db
+#   ./metric-postgres-statsdb.rb -u db_user -p db_pass -h db_host -d 'db1;db2;db3'
 #
 # NOTES:
 #   Requires PSQL `track_counts` `track_io_timing` for some metrics enabled

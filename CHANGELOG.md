@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
+### Changed
+- Option `database (-d, --db)` for metrics now supports semicolon separated list of databases to fetch metrics of multiple databases at once.
+### Breaking Changes
+- If no `database (-d, --db)` argument is supplied for the metric bins through the command line now metrics for all databases are returned.
 
 ## [2.3.2] - 2019-03-12
 ### Fixed

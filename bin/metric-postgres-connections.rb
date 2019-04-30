@@ -18,6 +18,7 @@
 #
 # USAGE:
 #   ./metric-postgres-connections.rb -u db_user -p db_pass -h db_host -d db
+#   ./metric-postgres-connections.rb -u db_user -p db_pass -h db_host -d 'db1;db2'
 #
 # NOTES:
 #
