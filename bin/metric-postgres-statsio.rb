@@ -30,6 +30,7 @@
 #
 
 require 'sensu-plugins-postgres/pgpass'
+require 'sensu-plugins-postgres/pgdatabases'
 require 'sensu-plugin/metric/cli'
 require 'pg'
 require 'socket'
@@ -61,10 +62,11 @@ class PostgresStatsIOMetrics < Sensu::Plugin::Metric::CLI::Graphite
          short: '-P PORT',
          long: '--port PORT'
 
-  option :database,
-         description: 'Database name',
+  option :databases,
+         description: 'Database names, separated by ";"',
          short: '-d DB',
-         long: '--db DB'
+         long: '--db DB',
+         default: nil
 
   option :scope,
          description: 'Scope, see http://www.postgresql.org/docs/9.2/static/monitoring-stats.html',
@@ -84,16 +86,28 @@ class PostgresStatsIOMetrics < Sensu::Plugin::Metric::CLI::Graphite
          default: nil
 
   include Pgpass
+  include Pgdatabases
 
   def run
     timestamp = Time.now.to_i
     pgpass
-    con     = PG.connect(host: config[:hostname],
-                         dbname: config[:database],
-                         user: config[:user],
-                         password: config[:password],
-                         port: config[:port],
-                         connect_timeout: config[:timeout])
+
+    pgdatabases.each do |database|
+      output_database(database, timestamp)
+    end
+
+    ok
+  end
+
+  private
+
+  def output_database(database)
+    con = PG.connect(host: config[:hostname],
+                     dbname: database,
+                     user: config[:user],
+                     password: config[:password],
+                     port: config[:port],
+                     connect_timeout: config[:timeout])
     request = [
       'select sum(heap_blks_read) as heap_blks_read, sum(heap_blks_hit) as heap_blks_hit,',
       'sum(idx_blks_read) as idx_blks_read, sum(idx_blks_hit) as idx_blks_hit,',
@@ -103,17 +117,17 @@ class PostgresStatsIOMetrics < Sensu::Plugin::Metric::CLI::Graphite
     ]
     con.exec(request.join(' ')) do |result|
       result.each do |row|
-        output "#{config[:scheme]}.statsio.#{config[:database]}.heap_blks_read", row['heap_blks_read'], timestamp
-        output "#{config[:scheme]}.statsio.#{config[:database]}.heap_blks_hit", row['heap_blks_hit'], timestamp
-        output "#{config[:scheme]}.statsio.#{config[:database]}.idx_blks_read", row['idx_blks_read'], timestamp
-        output "#{config[:scheme]}.statsio.#{config[:database]}.idx_blks_hit", row['idx_blks_hit'], timestamp
-        output "#{config[:scheme]}.statsio.#{config[:database]}.toast_blks_read", row['toast_blks_read'], timestamp
-        output "#{config[:scheme]}.statsio.#{config[:database]}.toast_blks_hit", row['toast_blks_hit'], timestamp
-        output "#{config[:scheme]}.statsio.#{config[:database]}.tidx_blks_read", row['tidx_blks_read'], timestamp
-        output "#{config[:scheme]}.statsio.#{config[:database]}.tidx_blks_hit", row['tidx_blks_hit'], timestamp
+        output "#{config[:scheme]}.statsio.#{database}.heap_blks_read", row['heap_blks_read'], timestamp
+        output "#{config[:scheme]}.statsio.#{database}.heap_blks_hit", row['heap_blks_hit'], timestamp
+        output "#{config[:scheme]}.statsio.#{database}.idx_blks_read", row['idx_blks_read'], timestamp
+        output "#{config[:scheme]}.statsio.#{database}.idx_blks_hit", row['idx_blks_hit'], timestamp
+        output "#{config[:scheme]}.statsio.#{database}.toast_blks_read", row['toast_blks_read'], timestamp
+        output "#{config[:scheme]}.statsio.#{database}.toast_blks_hit", row['toast_blks_hit'], timestamp
+        output "#{config[:scheme]}.statsio.#{database}.tidx_blks_read", row['tidx_blks_read'], timestamp
+        output "#{config[:scheme]}.statsio.#{database}.tidx_blks_hit", row['tidx_blks_hit'], timestamp
       end
     end
 
-    ok
+    con.close
   end
 end

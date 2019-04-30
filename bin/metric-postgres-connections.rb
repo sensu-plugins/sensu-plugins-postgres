@@ -29,6 +29,7 @@
 #
 
 require 'sensu-plugins-postgres/pgpass'
+require 'sensu-plugins-postgres/pgdatabases'
 require 'sensu-plugin/metric/cli'
 require 'pg'
 require 'socket'
@@ -60,10 +61,11 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
          short: '-P PORT',
          long: '--port PORT'
 
-  option :database,
-         description: 'Database name',
+  option :databases,
+         description: 'Database names, separated by ";"',
          short: '-d DB',
-         long: '--db DB'
+         long: '--db DB',
+         default: nil
 
   option :scheme,
          description: 'Metric naming scheme, text to prepend to $queue_name.$metric',
@@ -77,12 +79,14 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
          default: nil
 
   include Pgpass
+  include Pgdatabases
 
   def run
     timestamp = Time.now.to_i
     pgpass
+    databases = pgdatabases
     con     = PG.connect(host: config[:hostname],
-                         dbname: config[:database],
+                         dbname: databases.first,
                          user: config[:user],
                          password: config[:password],
                          port: config[:port],
@@ -96,30 +100,32 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
     ]
     wait_col = con.exec(request.join(' ')).first['wait_col']
 
-    request = [
-      "select count(*), #{wait_col} as waiting from pg_stat_activity",
-      "where datname = '#{config[:database]}' group by #{wait_col}"
-    ]
+    databases.each do |database|
+      request = [
+        "select count(*), #{wait_col} as waiting from pg_stat_activity",
+        "where datname = '#{database}' group by #{wait_col}"
+      ]
 
-    metrics = {
-      active: 0,
-      waiting: 0,
-      total: 0
-    }
-    con.exec(request.join(' ')) do |result|
-      result.each do |row|
-        if row['waiting'] == 't'
-          metrics[:waiting] = row['count']
-        elsif row['waiting'] == 'f'
-          metrics[:active] = row['count']
+      metrics = {
+        active: 0,
+        waiting: 0,
+        total: 0
+      }
+      con.exec(request.join(' ')) do |result|
+        result.each do |row|
+          if row['waiting'] == 't'
+            metrics[:waiting] = row['count']
+          elsif row['waiting'] == 'f'
+            metrics[:active] = row['count']
+          end
         end
       end
-    end
 
-    metrics[:total] = (metrics[:waiting].to_i + metrics[:active].to_i)
+      metrics[:total] = (metrics[:waiting].to_i + metrics[:active].to_i)
 
-    metrics.each do |metric, value|
-      output "#{config[:scheme]}.connections.#{config[:database]}.#{metric}", value, timestamp
+      metrics.each do |metric, value|
+        output "#{config[:scheme]}.connections.#{database}.#{metric}", value, timestamp
+      end
     end
 
     ok

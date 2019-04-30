@@ -29,6 +29,7 @@
 #
 
 require 'sensu-plugins-postgres/pgpass'
+require 'sensu-plugins-postgres/pgdatabases'
 require 'sensu-plugin/metric/cli'
 require 'pg'
 require 'socket'
@@ -60,10 +61,11 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
          short: '-P PORT',
          long: '--port PORT'
 
-  option :database,
-         description: 'Database name',
+  option :databases,
+         description: 'Database names, separated by ";"',
          short: '-d DB',
-         long: '--db DB'
+         long: '--db DB',
+         default: nil
 
   option :scheme,
          description: 'Metric naming scheme, text to prepend to $queue_name.$metric',
@@ -77,23 +79,28 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
          default: nil
 
   include Pgpass
+  include Pgdatabases
 
   def run
     timestamp = Time.now.to_i
     pgpass
-    con     = PG.connect(host: config[:hostname],
-                         dbname: config[:database],
-                         user: config[:user],
-                         password: config[:password],
-                         port: config[:port],
-                         connect_timeout: config[:timeout])
-    request = [
-      "select pg_database_size('#{config[:database]}')"
-    ]
+    databases = pgdatabases
+    con       = PG.connect(host: config[:hostname],
+                           dbname: databases.first,
+                           user: config[:user],
+                           password: config[:password],
+                           port: config[:port],
+                           connect_timeout: config[:timeout])
 
-    con.exec(request.join(' ')) do |result|
-      result.each do |row|
-        output "#{config[:scheme]}.size.#{config[:database]}", row['pg_database_size'], timestamp
+    databases.each do |database|
+      request = [
+        "select pg_database_size('#{database}')"
+      ]
+
+      con.exec(request.join(' ')) do |result|
+        result.each do |row|
+          output "#{config[:scheme]}.size.#{database}", row['pg_database_size'], timestamp
+        end
       end
     end
 

@@ -30,6 +30,7 @@
 #
 
 require 'sensu-plugins-postgres/pgpass'
+require 'sensu-plugins-postgres/pgdatabases'
 require 'sensu-plugin/metric/cli'
 require 'pg'
 require 'socket'
@@ -61,10 +62,11 @@ class PostgresStatsTableMetrics < Sensu::Plugin::Metric::CLI::Graphite
          short: '-P PORT',
          long: '--port PORT'
 
-  option :database,
-         description: 'Database name',
+  option :databases,
+         description: 'Database names, separated by ";"',
          short: '-d DB',
-         long: '--db DB'
+         long: '--db DB',
+         default: nil
 
   option :scope,
          description: 'Scope, see http://www.postgresql.org/docs/9.2/static/monitoring-stats.html',
@@ -84,16 +86,28 @@ class PostgresStatsTableMetrics < Sensu::Plugin::Metric::CLI::Graphite
          default: nil
 
   include Pgpass
+  include Pgdatabases
 
   def run
     timestamp = Time.now.to_i
     pgpass
-    con     = PG.connect(host: config[:hostname],
-                         dbname: config[:database],
-                         user: config[:user],
-                         password: config[:password],
-                         port: config[:port],
-                         connect_timeout: config[:timeout])
+
+    pgdatabases.each do |database|
+      output_database(database, timestamp)
+    end
+
+    ok
+  end
+
+  private
+
+  def output_database(database)
+    con = PG.connect(host: config[:hostname],
+                     dbname: database,
+                     user: config[:user],
+                     password: config[:password],
+                     port: config[:port],
+                     connect_timeout: config[:timeout])
     request = [
       'select sum(seq_scan) as seq_scan, sum(seq_tup_read) as seq_tup_read,',
       'sum(idx_scan) as idx_scan, sum(idx_tup_fetch) as idx_tup_fetch,',
@@ -103,19 +117,17 @@ class PostgresStatsTableMetrics < Sensu::Plugin::Metric::CLI::Graphite
     ]
     con.exec(request.join(' ')) do |result|
       result.each do |row|
-        output "#{config[:scheme]}.statstable.#{config[:database]}.seq_scan", row['seq_scan'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.seq_tup_read", row['seq_tup_read'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.idx_scan", row['idx_scan'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.idx_tup_fetch", row['idx_tup_fetch'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.n_tup_ins", row['n_tup_ins'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.n_tup_upd", row['n_tup_upd'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.n_tup_del", row['n_tup_del'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.n_tup_hot_upd", row['n_tup_hot_upd'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.n_live_tup", row['n_live_tup'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.n_dead_tup", row['n_dead_tup'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.seq_scan", row['seq_scan'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.seq_tup_read", row['seq_tup_read'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.idx_scan", row['idx_scan'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.idx_tup_fetch", row['idx_tup_fetch'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.n_tup_ins", row['n_tup_ins'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.n_tup_upd", row['n_tup_upd'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.n_tup_del", row['n_tup_del'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.n_tup_hot_upd", row['n_tup_hot_upd'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.n_live_tup", row['n_live_tup'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.n_dead_tup", row['n_dead_tup'], timestamp
       end
     end
-
-    ok
   end
 end
