@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
+### Added
+- .bonsai.yml descriptor for listing on https://bonsai.sensu.io
+
+### Changed
+- updated sensu-plugin dependency to 4.0
 
 ## [2.3.2] - 2019-03-12
 ### Fixed
