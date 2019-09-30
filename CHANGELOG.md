@@ -4,8 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
-### Update check-postgres-query.rb
-- Add `-r`, `--regex-pattern` to match query result against (@jindraj)
+- Remove EOL Rubies (@phumpal)
 
 ## [2.4.0] - 2019-10-04
 ### Added
