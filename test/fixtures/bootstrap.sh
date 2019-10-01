@@ -17,6 +17,7 @@ RUBY_HOME=${MY_RUBY_HOME}
 
 # setup a .pgpass file
 cat << EOF > /tmp/.pgpass
+# This is a comment
 *:5432:*:postgres:<REDACTED>
 EOF
 
