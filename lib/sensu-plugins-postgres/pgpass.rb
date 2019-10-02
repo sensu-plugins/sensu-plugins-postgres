@@ -1,12 +1,8 @@
 module Pgpass
   def read_pgpass(pg_pass_file)
     File.readlines(pg_pass_file).each do |line|
-      if line.start_with?('#')
-        # Perform no action. Line is a comment
-        next
-      else
-        return line.strip.split(':')
-      end
+      return line.strip.split(':') unless line.start_with?('#')
+      next
     end
   end
 
