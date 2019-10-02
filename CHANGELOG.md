@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
+- Support comments in pgpass file. Keeps previous behavior and adds support for ignoring leading comments (@phumpal)
 
 ## [2.3.2] - 2019-03-12
 ### Fixed
