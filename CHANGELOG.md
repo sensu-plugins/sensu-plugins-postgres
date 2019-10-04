@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
+
+## [2.4.0] - 2019-10-04
+### Added
 - Support comments in pgpass file. Keeps previous behavior and adds support for ignoring leading comments (@phumpal)
 
 ## [2.3.2] - 2019-03-12
@@ -179,7 +182,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.3.2...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.4.0...HEAD
+[2.4.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.3.2...2.4.0
 [2.3.2]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.3.1...2.3.2
 [2.3.1]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.3.0...2.3.1
 [2.3.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.2.2...2.3.0
