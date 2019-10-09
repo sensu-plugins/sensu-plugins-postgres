@@ -73,6 +73,11 @@ class CheckPostgresQuery < Sensu::Plugin::Check::CLI
          long: '--query QUERY',
          required: true
 
+  option :regex_pattern,
+         description: 'Query output regex pattern',
+         short: '-r REGEX',
+         long: '--regex-pattern REGEX'
+
   option :check_tuples,
          description: 'Check against the number of tuples (rows) returned by the query',
          short: '-t',
@@ -125,6 +130,8 @@ class CheckPostgresQuery < Sensu::Plugin::Check::CLI
       critical "Results: #{res.values}"
     elsif config[:warning] && calc.evaluate(config[:warning], value: value)
       warning "Results: #{res.values}"
+    elsif config[:regex_pattern] && (res.getvalue(0, 0) !~ /#{config[:regex_pattern]}/)
+      critical "Query result #{res.getvalue(0, 0)} doesn't match configured regex #{config[:regex_pattern]}"
     else
       ok 'Query OK'
     end
