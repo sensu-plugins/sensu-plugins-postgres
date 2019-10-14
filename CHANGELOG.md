@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
+- check-postgres-replication.rb - critical if slave is undefined, localhost or master and slave are same
 
 ### Fixed
 - check-postgres-replication.rb: fix condition where connection timeout is considered a boolean rather than an integer value (@majormoses) (@phumpal) (@VeselaHouba)

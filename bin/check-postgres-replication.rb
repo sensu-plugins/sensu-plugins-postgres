@@ -43,13 +43,14 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
   option(:master_host,
          short: '-m',
          long: '--master-host=HOST',
+         required: true,
          description: 'PostgreSQL master HOST')
 
   option(:slave_host,
          short: '-s',
          long: '--slave-host=HOST',
-         description: 'PostgreSQL slave HOST',
-         default: 'localhost')
+         required: true,
+         description: 'PostgreSQL slave HOST')
 
   option(:port,
          short: '-P',
@@ -105,6 +106,8 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
 
   def run
     ssl_mode = config[:ssl] ? 'require' : 'prefer'
+
+    critical 'Master and slave cannot be the same host' if config[:master_host] == config[:slave_host]
 
     # Establishing connection to the master
     pgpass
