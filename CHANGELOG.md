@@ -4,7 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
-- Remove EOL Rubies (@phumpal)
+
+
+## [3.0.0] - 2019-11-20
+### Breaking Changes
+- Removed ruby < 2.4 since these Rubies are EOL (@phumpal)
 
 ## [2.4.0] - 2019-10-04
 ### Added
@@ -183,7 +187,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.4.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/3.0.0...HEAD
+[3.0.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.4.0...3.0.0
 [2.4.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.3.2...2.4.0
 [2.3.2]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.3.1...2.3.2
 [2.3.1]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.3.0...2.3.1
