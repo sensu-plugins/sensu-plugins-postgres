@@ -27,15 +27,15 @@ script:
 before_deploy:
 - bash -c "[ ! -d bonsai/ ] && git clone https://github.com/sensu/sensu-go-bonsai-asset.git --branch postgres --single-branch bonsai || echo 'bonsai/ exists, skipping git clone'"
 deploy:
-#- provider: rubygems
-#  api_key:
-#    secure: L3ot3q90Sz+1dhi1Lxg4rvxZ0AEUCq2dL55Gzau48wou72T3GYSDBoqVGnZPmQcS9miNy4J7NZMxUgfoycnceqUkkue8+ss4c42NtrYs+SLU+rnmB/cwLTBQJ1ERRNXqgOYTwWt8EuIy6Dong1oCu8voFSj7NH4sXxTTO7RFho8=
-#  gem: sensu-plugins-postgres
-# on:
-#   tags: true
-#   all_branches: true
-#   rvm: 2.4.1
-#   repo: sensu-plugins/sensu-plugins-postgres
+- provider: rubygems
+  api_key:
+    secure: L3ot3q90Sz+1dhi1Lxg4rvxZ0AEUCq2dL55Gzau48wou72T3GYSDBoqVGnZPmQcS9miNy4J7NZMxUgfoycnceqUkkue8+ss4c42NtrYs+SLU+rnmB/cwLTBQJ1ERRNXqgOYTwWt8EuIy6Dong1oCu8voFSj7NH4sXxTTO7RFho8=
+  gem: sensu-plugins-postgres
+  on:
+    tags: true
+    all_branches: true
+    rvm: 2.4.1
+    repo: sensu-plugins/sensu-plugins-postgres
 - provider: script
   script: bonsai/ruby-runtime/travis-build-ruby-plugin-postgres-assets.sh sensu-plugins-postgres
   skip_cleanup: true
