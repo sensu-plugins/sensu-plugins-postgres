@@ -37,7 +37,7 @@ deploy:
 #    rvm: 2.4.1
 #    repo: sensu-plugins/sensu-plugins-postgres
 - provider: script
-  script: bonsai/ruby-runtime/travis-build-ruby-plugin-postgres-assets.sh sensu-plugins-postgres
+  script: bonsai/ruby-runtime/travis-build-ruby-plugin-assets.sh sensu-plugins-postgres
   skip_cleanup: true
   on:
     tags: true
