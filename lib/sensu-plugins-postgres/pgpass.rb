@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 module Pgpass
   def read_pgpass(pg_pass_file)
     File.readlines(pg_pass_file).each do |line|
       return line.strip.split(':') unless line.start_with?('#')
+
       next
     end
   end

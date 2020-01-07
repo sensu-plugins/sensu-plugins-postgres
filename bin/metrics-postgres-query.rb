@@ -1,4 +1,6 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: true
+
 #
 # metrics-postgres-query
 #
@@ -114,7 +116,7 @@ class MetricsPostgresQuery < Sensu::Plugin::Metric::CLI::Graphite
     value = if config[:count_tuples]
               res.ntuples
             else
-              res.first.values.first unless res.first.nil?
+              res.first&.values&.first
             end
 
     if config[:multirow] && !config[:count_tuples]
