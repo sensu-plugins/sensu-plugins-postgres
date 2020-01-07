@@ -1,4 +1,6 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: true
+
 #
 #   metric-postgres-statsio
 #
@@ -88,12 +90,12 @@ class PostgresStatsIOMetrics < Sensu::Plugin::Metric::CLI::Graphite
   def run
     timestamp = Time.now.to_i
     pgpass
-    con     = PG.connect(host: config[:hostname],
-                         dbname: config[:database],
-                         user: config[:user],
-                         password: config[:password],
-                         port: config[:port],
-                         connect_timeout: config[:timeout])
+    con = PG.connect(host: config[:hostname],
+                     dbname: config[:database],
+                     user: config[:user],
+                     password: config[:password],
+                     port: config[:port],
+                     connect_timeout: config[:timeout])
     request = [
       'select sum(heap_blks_read) as heap_blks_read, sum(heap_blks_hit) as heap_blks_hit,',
       'sum(idx_blks_read) as idx_blks_read, sum(idx_blks_hit) as idx_blks_hit,',
