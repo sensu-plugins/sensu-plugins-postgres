@@ -3,8 +3,10 @@ ARG ASSET_GEM
 ARG GIT_REF
 ARG GIT_REPO
 WORKDIR /assets/build/
+RUN apk info -vv | grep 'ssl'
+RUN apk del openssl-dev
 RUN apk add git
-RUN apk add postgresql-client postgresql-dev
+RUN apk add libressl-dev postgresql-client postgresql-dev
 RUN \
   gem install --no-ri --no-doc bundler && \
   printf "source 'https://rubygems.org'\n\ngem \"%s\", :git => \"%s\" , :ref => \"%s\"\n" ${ASSET_GEM} ${GIT_REPO} ${GIT_REF}| tee Gemfile 
