@@ -1,4 +1,6 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: true
+
 #
 #   metric-postgres-connections
 #
@@ -81,12 +83,12 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
   def run
     timestamp = Time.now.to_i
     pgpass
-    con     = PG.connect(host: config[:hostname],
-                         dbname: config[:database],
-                         user: config[:user],
-                         password: config[:password],
-                         port: config[:port],
-                         connect_timeout: config[:timeout])
+    con = PG.connect(host: config[:hostname],
+                     dbname: config[:database],
+                     user: config[:user],
+                     password: config[:password],
+                     port: config[:port],
+                     connect_timeout: config[:timeout])
     request = [
       "select case when count(*) = 1 then 'waiting' else",
       "'case when wait_event_type is null then false else true end' end as wait_col",

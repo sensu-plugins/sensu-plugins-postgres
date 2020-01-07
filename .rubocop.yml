@@ -1,3 +1,5 @@
+AllCops:
+  TargetRubyVersion: 2.4
 
 MethodLength:
   Max: 200
