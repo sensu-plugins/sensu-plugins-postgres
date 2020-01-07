@@ -39,7 +39,7 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength
   s.add_runtime_dependency 'dentaku',      '2.0.4'
   s.add_runtime_dependency 'pg',           '1.2.1'
 
-  s.add_development_dependency 'bundler',                   '~> 1.7'
+  s.add_development_dependency 'bundler',                   '~> 2.1'
   s.add_development_dependency 'codeclimate-test-reporter', '~> 1.0'
   s.add_development_dependency 'github-markup',             '~> 3.0'
   s.add_development_dependency 'kitchen-docker',            '~> 2.6'
