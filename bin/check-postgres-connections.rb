@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 #
 # check-postgres-connections
 #
@@ -114,7 +116,7 @@ class CheckPostgresConnections < Sensu::Plugin::Check::CLI
       unknown "Unable to query PostgreSQL: #{e.message}"
     end
 
-    percent = (current_conns.to_f / max_conns.to_f * 100).to_i
+    percent = (current_conns / max_conns.to_f * 100).to_i
 
     if config[:use_percentage]
       message = "PostgreSQL connections at #{percent}%, #{current_conns} out of #{available_conns} connections"

@@ -6,8 +6,12 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ## [Unreleased]
 ### Changes
 - Updated development dependency to bundler ~> 2.1
+- Updated development dependency to rake ~> 13.0 
 - Updated runtime dependency to 'pg' '1.2.1' from 1.1   
+- Updated runtime dependency 'dentaku' '3.3.4' from 2.04
 
+### Breaking Changes
+- Update `sensu-plugin` dependency from `~> 1.2` to `~> 4.0` you can read the changelog entries for [4.0](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#400---2018-02-17), [3.0](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#300---2018-12-04), and [2.0](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#v200---2017-03-29)
 
 ## [3.0.0] - 2019-11-20
 ### Breaking Changes

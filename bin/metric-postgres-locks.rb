@@ -1,4 +1,6 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: true
+
 #
 #   metric-postgres-locks
 #
@@ -83,12 +85,12 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
 
     locks_per_type = Hash.new(0)
     pgpass
-    con     = PG.connect(host: config[:hostname],
-                         dbname: config[:database],
-                         user: config[:user],
-                         password: config[:password],
-                         port: config[:port],
-                         connect_timeout: config[:timeout])
+    con = PG.connect(host: config[:hostname],
+                     dbname: config[:database],
+                     user: config[:user],
+                     password: config[:password],
+                     port: config[:port],
+                     connect_timeout: config[:timeout])
     request = [
       'SELECT mode, count(mode) AS count FROM pg_locks',
       "WHERE database = (SELECT oid FROM pg_database WHERE datname = '#{config[:database]}')",
