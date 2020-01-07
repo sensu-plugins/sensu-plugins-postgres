@@ -53,6 +53,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec',                     '~> 3.1'
   s.add_development_dependency 'rubocop',                   '~> 0.79.0'
   s.add_development_dependency 'serverspec',                '~> 2.41.5'
-  s.add_development_dependency 'test-kitchen',              '~> 1.16.0'
+  s.add_development_dependency 'test-kitchen',              '~> 1.25.0'
   s.add_development_dependency 'yard',                      '~> 0.9.11'
 end
