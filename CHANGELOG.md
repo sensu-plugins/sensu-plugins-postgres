@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
+### Changes
+- Updated development dependency to bundler ~> 2.1
+- Updated runtime dependency to 'pg' '1.2.1' from 1.1   
 
 
 ## [3.0.0] - 2019-11-20
