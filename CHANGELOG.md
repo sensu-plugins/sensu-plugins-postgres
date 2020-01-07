@@ -7,7 +7,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Changes
 - Updated development dependency to bundler ~> 2.1
 - Updated runtime dependency to 'pg' '1.2.1' from 1.1   
-
+- Updated runtime dependency 'dentaku' '3.3.4' from 2.04
 
 ## [3.0.0] - 2019-11-20
 ### Breaking Changes
