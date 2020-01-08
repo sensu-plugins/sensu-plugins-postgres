@@ -94,10 +94,11 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
          proc: lambda { |s| s.to_i }) # rubocop:disable Lambda
 
   option(:timeout,
-         short: '-T',
-         long: '--timeout',
-         default: nil,
-         description: 'Connection timeout (seconds)')
+         short: '-T TIMEOUT',
+         long: '--timeout=TIMEOUT',
+         default: 2,
+         description: 'Connection timeout (seconds)',
+         proc: proc(&:to_i))
 
   include Pgpass
   include PgUtil
