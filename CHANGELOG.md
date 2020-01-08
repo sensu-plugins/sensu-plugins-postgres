@@ -4,14 +4,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
+
+### Fixed
+- check-postgres-replication.rb: fix condition where connection timeout is considered a boolean rather than an integer value (@majormoses) (@phumpal) (@VeselaHouba)
+
 ### Added
 - `check-postgres-query.rb`: Add `-r`, `--regex-pattern` to match query result against (@jindraj)
 
 ### Changes
 - Updated development dependency to bundler ~> 2.1
-- Updated development dependency to rake ~> 13.0 
-- Updated development dependency to test-kitchen ~> 1.25.0 
-- Updated runtime dependency to 'pg' '1.2.1' from 1.1   
+- Updated development dependency to rake ~> 13.0
+- Updated development dependency to test-kitchen ~> 1.25.0
+- Updated runtime dependency to 'pg' '1.2.1' from 1.1
 - Updated runtime dependency 'dentaku' '3.3.4' from 2.04
 
 ### Breaking Changes
