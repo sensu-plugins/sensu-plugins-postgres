@@ -76,7 +76,7 @@ class CheckPostgresQuery < Sensu::Plugin::Check::CLI
          required: true
 
   option :regex_pattern,
-         description: 'Query output regex pattern',
+         description: 'Regex pattern to match on query results and alert on if it does not match',
          short: '-r REGEX',
          long: '--regex-pattern REGEX'
 
