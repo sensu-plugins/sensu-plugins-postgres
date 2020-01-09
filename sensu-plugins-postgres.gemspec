@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'sensu-plugin', '~> 4.0'
 
   s.add_runtime_dependency 'dentaku',      '3.3.4'
-  s.add_runtime_dependency 'pg',           '1.2.1'
+  s.add_runtime_dependency 'pg',           '1.2.2'
 
   s.add_development_dependency 'bundler',                   '~> 2.1'
   s.add_development_dependency 'codeclimate-test-reporter', '~> 1.0'
