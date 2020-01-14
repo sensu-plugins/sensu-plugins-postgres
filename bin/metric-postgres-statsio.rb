@@ -18,7 +18,7 @@
 #
 # USAGE:
 #   ./metric-postgres-statsio.rb -u db_user -p db_pass -h db_host -d db -s scope
-#   ./metric-postgres-statsio.rb -u db_user -p db_pass -h db_host -d 'db1;db2' -s scope
+#   ./metric-postgres-statsio.rb -u db_user -p db_pass -h db_host -d 'db1,db2' -s scope
 #
 # NOTES:
 #   Requires PSQL `track_io_timing` enabled
@@ -64,7 +64,7 @@ class PostgresStatsIOMetrics < Sensu::Plugin::Metric::CLI::Graphite
          long: '--port PORT'
 
   option :databases,
-         description: 'Database names, separated by ";"',
+         description: 'Database names, separated by ","',
          short: '-d DB',
          long: '--db DB',
          default: nil

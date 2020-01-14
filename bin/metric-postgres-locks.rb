@@ -18,7 +18,7 @@
 #
 # USAGE:
 #   ./metric-postgres-locks.rb -u db_user -p db_pass -h db_host -d db
-#   ./metric-postgres-locks.rb -u db_user -p db_pass -h db_host -d 'db1;db2'
+#   ./metric-postgres-locks.rb -u db_user -p db_pass -h db_host -d 'db1,db2'
 #
 # NOTES:
 #
@@ -63,7 +63,7 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
          long: '--port PORT'
 
   option :databases,
-         description: 'Database names, separated by ";"',
+         description: 'Database names, separated by ","',
          short: '-d DB',
          long: '--db DB',
          default: nil
@@ -88,21 +88,22 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
     locks_per_type = Hash.new(0)
     pgpass
     databases = pgdatabases
-    con       = PG.connect(host: config[:hostname],
-                           dbname: databases.first,
-                           user: config[:user],
-                           password: config[:password],
-                           port: config[:port],
-                           connect_timeout: config[:timeout])
+    # connect only to first database and get information for all databases through SQL queries
+    con = PG.connect(host: config[:hostname],
+                     dbname: databases.first,
+                     user: config[:user],
+                     password: config[:password],
+                     port: config[:port],
+                     connect_timeout: config[:timeout])
 
     databases.each do |database|
       request = [
         'SELECT mode, count(mode) AS count FROM pg_locks',
-        "WHERE database = (SELECT oid FROM pg_database WHERE datname = '#{database}')",
+        'WHERE database = (SELECT oid FROM pg_database WHERE datname = $1)',
         'GROUP BY mode'
       ]
 
-      con.exec(request.join(' ')) do |result|
+      con.exec_params(request.join(' '), [database]) do |result|
         result.each do |row|
           lock_name = row['mode'].downcase.to_sym
           locks_per_type[lock_name] = row['count']

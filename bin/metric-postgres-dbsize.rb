@@ -18,7 +18,7 @@
 #
 # USAGE:
 #   ./metric-postgres-dbsize.rb -u db_user -p db_pass -h db_host -d db
-#   ./metric-postgres-dbsize.rb -u db_user -p db_pass -h db_host -d 'db1;db2'
+#   ./metric-postgres-dbsize.rb -u db_user -p db_pass -h db_host -d 'db1,db2'
 #
 # NOTES:
 #
@@ -63,7 +63,7 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
          long: '--port PORT'
 
   option :databases,
-         description: 'Database names, separated by ";"',
+         description: 'Database names, separated by ","',
          short: '-d DB',
          long: '--db DB',
          default: nil
@@ -86,19 +86,15 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
     timestamp = Time.now.to_i
     pgpass
     databases = pgdatabases
-    con       = PG.connect(host: config[:hostname],
-                           dbname: databases.first,
-                           user: config[:user],
-                           password: config[:password],
-                           port: config[:port],
-                           connect_timeout: config[:timeout])
+    con = PG.connect(host: config[:hostname],
+                     dbname: databases.first,
+                     user: config[:user],
+                     password: config[:password],
+                     port: config[:port],
+                     connect_timeout: config[:timeout])
 
     databases.each do |database|
-      request = [
-        "select pg_database_size('#{database}')"
-      ]
-
-      con.exec(request.join(' ')) do |result|
+      con.exec_params('select pg_database_size($1)', [database]) do |result|
         result.each do |row|
           output "#{config[:scheme]}.size.#{database}", row['pg_database_size'], timestamp
         end

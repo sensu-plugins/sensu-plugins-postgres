@@ -14,7 +14,7 @@ module Pgdatabases
 
       dbs
     else
-      config[:databases].split(';').map(&:strip)
+      config[:databases].split(',').map(&:strip)
     end
   end
 end

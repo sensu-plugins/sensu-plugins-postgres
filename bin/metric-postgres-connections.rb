@@ -18,7 +18,7 @@
 #
 # USAGE:
 #   ./metric-postgres-connections.rb -u db_user -p db_pass -h db_host -d db
-#   ./metric-postgres-connections.rb -u db_user -p db_pass -h db_host -d 'db1;db2'
+#   ./metric-postgres-connections.rb -u db_user -p db_pass -h db_host -d 'db1,db2'
 #
 # NOTES:
 #
@@ -63,7 +63,7 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
          long: '--port PORT'
 
   option :databases,
-         description: 'Database names, separated by ";"',
+         description: 'Database names, separated by ","',
          short: '-d DB',
          long: '--db DB',
          default: nil
@@ -86,12 +86,12 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
     timestamp = Time.now.to_i
     pgpass
     databases = pgdatabases
-    con     = PG.connect(host: config[:hostname],
-                         dbname: databases.first,
-                         user: config[:user],
-                         password: config[:password],
-                         port: config[:port],
-                         connect_timeout: config[:timeout])
+    con = PG.connect(host: config[:hostname],
+                     dbname: databases.first,
+                     user: config[:user],
+                     password: config[:password],
+                     port: config[:port],
+                     connect_timeout: config[:timeout])
     request = [
       "select case when count(*) = 1 then 'waiting' else",
       "'case when wait_event_type is null then false else true end' end as wait_col",
@@ -104,7 +104,7 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
     databases.each do |database|
       request = [
         "select count(*), #{wait_col} as waiting from pg_stat_activity",
-        "where datname = '#{database}' group by #{wait_col}"
+        "where datname = '#{con.escape_string(database)}' group by #{wait_col}"
       ]
 
       metrics = {
