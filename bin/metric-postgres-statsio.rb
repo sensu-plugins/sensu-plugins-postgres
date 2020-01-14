@@ -90,11 +90,10 @@ class PostgresStatsIOMetrics < Sensu::Plugin::Metric::CLI::Graphite
   include Pgdatabases
 
   def run
-    timestamp = Time.now.to_i
     pgpass
 
     pgdatabases.each do |database|
-      output_database(database, timestamp)
+      output_database(database)
     end
 
     ok
@@ -103,6 +102,7 @@ class PostgresStatsIOMetrics < Sensu::Plugin::Metric::CLI::Graphite
   private
 
   def output_database(database)
+    timestamp = Time.now.to_i
     con = PG.connect(host: config[:hostname],
                      dbname: database,
                      user: config[:user],
