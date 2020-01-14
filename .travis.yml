@@ -5,11 +5,9 @@ cache:
 - bundler
 before_install:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
-  - gem install bundler -v 1.15.1
 install:
 - bundle install
 rvm:
-- 2.3.0
 - 2.4.1
 notifications:
   email:
@@ -25,8 +23,10 @@ script:
 - bundle exec rake kitchen:ruby-`echo $TRAVIS_RUBY_VERSION | sed -e "s/\.//g"`-debian-8
 - gem build sensu-plugins-postgres.gemspec
 - gem install sensu-plugins-postgres-*.gem
+before_deploy:
+- bash -c "[ ! -d bonsai/ ] && git clone https://github.com/sensu/sensu-go-bonsai-asset.git bonsai || echo 'bonsai/ exists, skipping git clone' ; cp asset_build_scripts/Dockerfile.* bonsai/ruby-runtime/"
 deploy:
-  provider: rubygems
+- provider: rubygems
   api_key:
     secure: L3ot3q90Sz+1dhi1Lxg4rvxZ0AEUCq2dL55Gzau48wou72T3GYSDBoqVGnZPmQcS9miNy4J7NZMxUgfoycnceqUkkue8+ss4c42NtrYs+SLU+rnmB/cwLTBQJ1ERRNXqgOYTwWt8EuIy6Dong1oCu8voFSj7NH4sXxTTO7RFho8=
   gem: sensu-plugins-postgres
@@ -35,3 +35,10 @@ deploy:
     all_branches: true
     rvm: 2.4.1
     repo: sensu-plugins/sensu-plugins-postgres
+- provider: script
+  script: bonsai/ruby-runtime/travis-build-ruby-plugin-assets.sh sensu-plugins-postgres
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
+    rvm: 2.4.1

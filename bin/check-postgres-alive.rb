@@ -1,4 +1,6 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: true
+
 #
 #   check-postgres-alive
 #
@@ -86,6 +88,6 @@ class CheckPostgres < Sensu::Plugin::Check::CLI
   rescue PG::Error => e
     critical "Error message: #{e.error.split("\n").first}"
   ensure
-    con.close if con
+    con&.close
   end
 end

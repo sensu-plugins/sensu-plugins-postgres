@@ -1,4 +1,6 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: true
+
 #
 #   check-postgres-replication
 #
@@ -41,13 +43,14 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
   option(:master_host,
          short: '-m',
          long: '--master-host=HOST',
+         required: true,
          description: 'PostgreSQL master HOST')
 
   option(:slave_host,
          short: '-s',
          long: '--slave-host=HOST',
-         description: 'PostgreSQL slave HOST',
-         default: 'localhost')
+         required: true,
+         description: 'PostgreSQL slave HOST')
 
   option(:port,
          short: '-P',
@@ -92,16 +95,19 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
          proc: lambda { |s| s.to_i }) # rubocop:disable Lambda
 
   option(:timeout,
-         short: '-T',
-         long: '--timeout',
-         default: nil,
-         description: 'Connection timeout (seconds)')
+         short: '-T TIMEOUT',
+         long: '--timeout=TIMEOUT',
+         default: 2,
+         description: 'Connection timeout (seconds)',
+         proc: proc(&:to_i))
 
   include Pgpass
   include PgUtil
 
   def run
     ssl_mode = config[:ssl] ? 'require' : 'prefer'
+
+    critical 'Master and slave cannot be the same host' if config[:master_host] == config[:slave_host]
 
     # Establishing connection to the master
     pgpass
