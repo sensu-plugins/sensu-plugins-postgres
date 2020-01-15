@@ -5,7 +5,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 ### Changed
-- Option `database (-d, --db)` for metrics now supports semicolon separated list of databases to fetch metrics of multiple databases at once.
+- On `bin/metric-*`: option `database (-d, --db)` now supports semicolon separated list of databases to fetch metrics of multiple databases at once.
 ### Breaking Changes
 - If no `database (-d, --db)` argument is supplied for the metric bins through the command line now metrics for all databases are returned.
 
