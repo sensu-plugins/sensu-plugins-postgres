@@ -4,15 +4,26 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
-### Changes
-- Updated development dependency to bundler ~> 2.1
-- Updated development dependency to rake ~> 13.0 
-- Updated development dependency to test-kitchen ~> 1.25.0 
-- Updated runtime dependency to 'pg' '1.2.1' from 1.1   
-- Updated runtime dependency 'dentaku' '3.3.4' from 2.04
+
+## [4.0.0] - 2020-01-09
 
 ### Breaking Changes
 - Update `sensu-plugin` dependency from `~> 1.2` to `~> 4.0` you can read the changelog entries for [4.0](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#400---2018-02-17), [3.0](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#300---2018-12-04), and [2.0](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#v200---2017-03-29)
+- `check-postgres-replication.rb`: both `--slave-host` and `master-host` arguments are now required flags where previously they had localhost defaults (@phumpal)
+
+### Fixed
+- `check-postgres-replication.rb`: fix condition where connection timeout is considered a boolean rather than an integer value (@majormoses) (@phumpal) (@VeselaHouba)
+- `check-postgres-replication.rb`: critical if the master and slave are same (@phumpal)
+
+### Added
+- `check-postgres-query.rb`: Add `-r`, `--regex-pattern` to match query result against (@jindraj)
+
+### Changes
+- Updated development dependency to bundler ~> 2.1
+- Updated development dependency to rake ~> 13.0
+- Updated development dependency to test-kitchen ~> 1.25.0
+- Updated runtime dependency to 'pg' '1.2.1' from 1.1
+- Updated runtime dependency 'dentaku' '3.3.4' from 2.04
 
 ## [3.0.0] - 2019-11-20
 ### Breaking Changes
@@ -195,7 +206,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/3.0.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/4.0.0...HEAD
+[4.0.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/3.0.0...4.0.0
 [3.0.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.4.0...3.0.0
 [2.4.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.3.2...2.4.0
 [2.3.2]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.3.1...2.3.2
