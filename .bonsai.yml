@@ -36,7 +36,7 @@ builds:
   -  "entity.system.arch == 'amd64'"
   -  "entity.system.platform_family == 'rhel'"
   -  "entity.system.platform_version.split('.')[0] == '7'"
-- platform: "debian"
+- platform: "debian7"
   arch: "amd64"
   asset_filename: "#{repo}_#{version}_debian_linux_amd64.tar.gz"
   sha_filename: "#{repo}_#{version}_sha512-checksums.txt"
@@ -44,6 +44,16 @@ builds:
   -  "entity.system.os == 'linux'"
   -  "entity.system.arch == 'amd64'"
   -  "entity.system.platform_family == 'debian'"
+  -  "entity.system.platform_version.split('.')[0] == '7'"
+- platform: "debian8"
+  arch: "amd64"
+  asset_filename: "#{repo}_#{version}_debian_linux_amd64.tar.gz"
+  sha_filename: "#{repo}_#{version}_sha512-checksums.txt"
+  filter:
+  -  "entity.system.os == 'linux'"
+  -  "entity.system.arch == 'amd64'"
+  -  "entity.system.platform_family == 'debian'"
+  -  "entity.system.platform_version.split('.')[0] == '8'"
 - platform: "debian9"
   arch: "amd64"
   asset_filename: "#{repo}_#{version}_debian9_linux_amd64.tar.gz"
@@ -51,3 +61,6 @@ builds:
   filter:
   -  "entity.system.os == 'linux'"
   -  "entity.system.arch == 'amd64'"
+  -  "entity.system.platform_family == 'debian'"
+  -  "entity.system.platform_version.split('.')[0] == '9'"
+
