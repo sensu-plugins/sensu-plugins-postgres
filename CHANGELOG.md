@@ -4,7 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
-- `check-postgres-replication.rb`: `# frozen_string_literal: true` does not play nicely with mixlib-cli
+
+## [4.0.2] - 2020-06-02
+- Fixed `# frozen_string_literal: true` does not play nicely with mixlib-cli.
 
 ## [4.0.1] - 2020-04-20
 ### Fixed
@@ -211,7 +213,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/4.0.1...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/4.0.2...HEAD
+[4.0.2]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/4.0.1...4.0.2
 [4.0.1]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/4.0.0...4.0.1
 [4.0.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/3.0.0...4.0.0
 [3.0.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/2.4.0...3.0.0
