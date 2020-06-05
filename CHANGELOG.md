@@ -5,6 +5,10 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+## [4.1.0] - 2020-06-04
+### Added
+- new `metric-postgres-vaccum.rb` metric gathering script for postgres vacuum process (@phumpal)
+
 ## [4.0.2] - 2020-06-02
 - Fixed `# frozen_string_literal: true` does not play nicely with mixlib-cli.
 
@@ -213,7 +217,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/4.0.2...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/4.1.0...HEAD
+[4.1.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/4.0.2...4.1.0
 [4.0.2]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/4.0.1...4.0.2
 [4.0.1]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/4.0.0...4.0.1
 [4.0.0]: https://github.com/sensu-plugins/sensu-plugins-postgres/compare/3.0.0...4.0.0
