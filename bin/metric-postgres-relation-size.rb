@@ -1,12 +1,11 @@
 #! /usr/bin/env ruby
 # frozen_string_literal: false
-
 #
 #   metrics-postgres-relation-size.rb
 #
 # DESCRIPTION:
 #
-#   This plugin collects postgres the total size of the biggest tables.
+#   This plugin finds the total size of the largest tables.
 #
 #   https://www.postgresql.org/docs/current/functions-admin.html#FUNCTIONS-ADMIN-DBOBJECT
 #
