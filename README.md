@@ -22,6 +22,7 @@
  * bin/metric-postgres-statsio.rb
  * bin/check-postgres-query.rb
  * bin/metrics-postgres-query.rb
+ * bin/metric-postgres-relation-size.rb
 
 ## Usage
 
