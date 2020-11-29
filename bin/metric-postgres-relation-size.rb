@@ -1,6 +1,5 @@
 #! /usr/bin/env ruby
 # frozen_string_literal: false
-#
 #   metrics-postgres-relation-size.rb
 #
 # DESCRIPTION:
