@@ -20,6 +20,7 @@
 #
 # USAGE:
 #   ./metric-postgres-locks.rb -u db_user -p db_pass -h db_host -d db
+#   ./metric-postgres-locks.rb -u db_user -p db_pass -h db_host -d 'db1,db2'
 #
 # NOTES:
 #
@@ -31,6 +32,7 @@
 #
 
 require 'sensu-plugins-postgres/pgpass'
+require 'sensu-plugins-postgres/pgdatabases'
 require 'sensu-plugin/metric/cli'
 require 'pg'
 require 'socket'
@@ -62,10 +64,11 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
          short: '-P PORT',
          long: '--port PORT'
 
-  option :database,
-         description: 'Database name',
+  option :databases,
+         description: 'Database names, separated by ","',
          short: '-d DB',
-         long: '--db DB'
+         long: '--db DB',
+         default: nil
 
   option :scheme,
          description: 'Metric naming scheme, text to prepend to $queue_name.$metric',
@@ -79,33 +82,39 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
          default: nil
 
   include Pgpass
+  include Pgdatabases
 
   def run
     timestamp = Time.now.to_i
 
     locks_per_type = Hash.new(0)
     pgpass
+    databases = pgdatabases
+    # connect only to first database and get information for all databases through SQL queries
     con = PG.connect(host: config[:hostname],
-                     dbname: config[:database],
+                     dbname: databases.first,
                      user: config[:user],
                      password: config[:password],
                      port: config[:port],
                      connect_timeout: config[:timeout])
-    request = [
-      'SELECT mode, count(mode) AS count FROM pg_locks',
-      "WHERE database = (SELECT oid FROM pg_database WHERE datname = '#{config[:database]}')",
-      'GROUP BY mode'
-    ]
 
-    con.exec(request.join(' ')) do |result|
-      result.each do |row|
-        lock_name = row['mode'].downcase.to_sym
-        locks_per_type[lock_name] = row['count']
+    databases.each do |database|
+      request = [
+        'SELECT mode, count(mode) AS count FROM pg_locks',
+        'WHERE database = (SELECT oid FROM pg_database WHERE datname = $1)',
+        'GROUP BY mode'
+      ]
+
+      con.exec_params(request.join(' '), [database]) do |result|
+        result.each do |row|
+          lock_name = row['mode'].downcase.to_sym
+          locks_per_type[lock_name] = row['count']
+        end
       end
-    end
 
-    locks_per_type.each do |lock_type, count|
-      output "#{config[:scheme]}.locks.#{config[:database]}.#{lock_type}", count, timestamp
+      locks_per_type.each do |lock_type, count|
+        output "#{config[:scheme]}.locks.#{database}.#{lock_type}", count, timestamp
+      end
     end
 
     ok

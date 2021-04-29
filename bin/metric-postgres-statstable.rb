@@ -20,6 +20,7 @@
 #
 # USAGE:
 #   ./metric-postgres-statstable.rb -u db_user -p db_pass -h db_host -d db -s scope
+#   ./metric-postgres-statstable.rb -u db_user -p db_pass -h db_host -d 'db1,db2' -s scope
 #
 # NOTES:
 #   Requires PSQL `track_counts` enabled
@@ -32,6 +33,7 @@
 #
 
 require 'sensu-plugins-postgres/pgpass'
+require 'sensu-plugins-postgres/pgdatabases'
 require 'sensu-plugin/metric/cli'
 require 'pg'
 require 'socket'
@@ -63,10 +65,11 @@ class PostgresStatsTableMetrics < Sensu::Plugin::Metric::CLI::Graphite
          short: '-P PORT',
          long: '--port PORT'
 
-  option :database,
-         description: 'Database name',
+  option :databases,
+         description: 'Database names, separated by ","',
          short: '-d DB',
-         long: '--db DB'
+         long: '--db DB',
+         default: nil
 
   option :scope,
          description: 'Scope, see http://www.postgresql.org/docs/9.2/static/monitoring-stats.html',
@@ -86,12 +89,24 @@ class PostgresStatsTableMetrics < Sensu::Plugin::Metric::CLI::Graphite
          default: nil
 
   include Pgpass
+  include Pgdatabases
 
   def run
-    timestamp = Time.now.to_i
     pgpass
+
+    pgdatabases.each do |database|
+      output_database(database)
+    end
+
+    ok
+  end
+
+  private
+
+  def output_database(database)
+    timestamp = Time.now.to_i
     con = PG.connect(host: config[:hostname],
-                     dbname: config[:database],
+                     dbname: database,
                      user: config[:user],
                      password: config[:password],
                      port: config[:port],
@@ -105,19 +120,17 @@ class PostgresStatsTableMetrics < Sensu::Plugin::Metric::CLI::Graphite
     ]
     con.exec(request.join(' ')) do |result|
       result.each do |row|
-        output "#{config[:scheme]}.statstable.#{config[:database]}.seq_scan", row['seq_scan'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.seq_tup_read", row['seq_tup_read'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.idx_scan", row['idx_scan'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.idx_tup_fetch", row['idx_tup_fetch'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.n_tup_ins", row['n_tup_ins'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.n_tup_upd", row['n_tup_upd'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.n_tup_del", row['n_tup_del'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.n_tup_hot_upd", row['n_tup_hot_upd'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.n_live_tup", row['n_live_tup'], timestamp
-        output "#{config[:scheme]}.statstable.#{config[:database]}.n_dead_tup", row['n_dead_tup'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.seq_scan", row['seq_scan'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.seq_tup_read", row['seq_tup_read'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.idx_scan", row['idx_scan'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.idx_tup_fetch", row['idx_tup_fetch'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.n_tup_ins", row['n_tup_ins'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.n_tup_upd", row['n_tup_upd'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.n_tup_del", row['n_tup_del'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.n_tup_hot_upd", row['n_tup_hot_upd'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.n_live_tup", row['n_live_tup'], timestamp
+        output "#{config[:scheme]}.statstable.#{database}.n_dead_tup", row['n_dead_tup'], timestamp
       end
     end
-
-    ok
   end
 end
