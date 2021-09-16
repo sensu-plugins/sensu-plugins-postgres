@@ -6,6 +6,7 @@ ARG GREP_EXCLUDE='(ld.so|ld-linux-x86-64.so|libBrokenLocale.so|libSegFault.so|li
 ARG RUBY_VERSION=2.4.4
 
 WORKDIR /assets/build/
+RUN curl https://www.getpagespeed.com/files/centos6-eol.repo --output /etc/yum.repos.d/CentOS-Base.repo
 RUN yum install -y git 
 RUN yum install -y https://download.postgresql.org/pub/repos/yum/9.5/redhat/rhel-6-x86_64/pgdg-redhat-repo-latest.noarch.rpm
 RUN yum install -y postgresql95 postgresql95-libs postgresql95-devel
