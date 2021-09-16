@@ -9,6 +9,9 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - asset for generic debian build (including ubuntu) (@VeselaHouba)
 
+### Fixed
+- Fixing asset build directive for centos6, using package repository archive now that centos6 is EOL
+
 ## [4.2.0] - 2020-11-29
 ### Added
 - new `bin/metric-postgres-relation-size.rb` find largest tables (@phumpal)
