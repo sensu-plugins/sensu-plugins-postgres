@@ -9,6 +9,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 - Updated asset builds to use ruby26-runtime
 - Update asset builds to use libpg v12, to ensue compatibility with SCRAM password authentication introduced in postgresl 10
 
+### Fixed
+- Standardize on 10 second integer for timeout option to ensure working defaults with libpg. Newer libpg libraries don't like the nil default, treats it as a string and errors out.
 
 ## [4.3.0] - 2021-09-15
 
