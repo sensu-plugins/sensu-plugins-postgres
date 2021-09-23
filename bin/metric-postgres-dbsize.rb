@@ -76,7 +76,8 @@ class PostgresStatsDBMetrics < Sensu::Plugin::Metric::CLI::Graphite
          description: 'Connection timeout (seconds)',
          short: '-T TIMEOUT',
          long: '--timeout TIMEOUT',
-         default: nil
+         default: 10,
+         proc: proc(&:to_i)
 
   include Pgpass
 

@@ -97,7 +97,7 @@ class CheckPostgresReplicationStatus < Sensu::Plugin::Check::CLI
   option(:timeout,
          short: '-T TIMEOUT',
          long: '--timeout=TIMEOUT',
-         default: 2,
+         default: 10,
          description: 'Connection timeout (seconds)',
          proc: proc(&:to_i))
 

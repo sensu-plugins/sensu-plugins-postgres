@@ -80,19 +80,26 @@ Only first line is used. If database is set to `*` it is ommited.
 
 You can ovveride `pgpass` values with command line arguments, e.g. `-h` for hostname.
 
+
 ## Installation
+### Sensu Go Asset Installation
+
+Assets are the best way to make use of this plugin in Sensu Go. If you're not using an asset, please consider doing so! If you're using sensuctl 5.13 or later, you can use the following command to add the asset:
+
+sensuctl asset add sensu-plugins/sensu-plugins-postgresl
+
+If you're using an earlier version of sensuctl, you can download the asset definition from this project's Bonsai Asset Index page.
+
+Note: as of version 4.0.0 the plugin assets are built using the sensu-ruby26-runtime, and will also require that you have the sensu-ruby26-runtime asset and installed as part of the check configuration.
+
+
+### Gem Installation
+If you are unable to use the provided Sensu asset package, you can install this plugin via rubygems on a system that have ruby available.
 
 ```
 gem install sensu-plugins-postgres
 ```
 
-## Centos installation
-
-```
-yum -y install gcc ruby-devel rubygems  postgresql-devel
-sensu-install -p sensu-plugins-postgres
-
-```
 
 See [Installation and Setup](http://sensu-plugins.io/docs/installation_instructions.html) for details.
 

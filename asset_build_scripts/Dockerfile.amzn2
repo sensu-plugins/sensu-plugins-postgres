@@ -1,4 +1,4 @@
-FROM sensu/sensu-ruby-runtime-2.6.7-centos7:latest as builder
+FROM sensu/sensu-ruby-runtime-2.6.7-amzn2:latest as builder
 ARG ASSET_GEM
 ARG GIT_REF
 ARG GIT_REPO
@@ -6,12 +6,10 @@ ARG GREP_EXCLUDE='(ld.so|ld-linux-x86-64.so|libBrokenLocale.so|libSegFault.so|li
 ARG RUBY_VERSION=2.6.7
 
 WORKDIR /assets/build/
-RUN yum install -y git epel-release centos-release-scl
-RUN curl  https://download.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG  --output /etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG 
-RUN yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
-RUN yum install -y postgresql12 postgresql12-libs postgresql12-devel
+RUN amazon-linux-extras install postgresql12 epel -y
+RUN yum install -y git 
+RUN yum install -y postgresql-devel
 ENV CONFIGURE_ARGS="with-pg-config=/usr/pgsql-12/bin/pg_config"
-
 RUN \
   printf "source 'https://rubygems.org'\n\ngem \"%s\", :git => \"%s\" , :ref => \"%s\"\n" ${ASSET_GEM} ${GIT_REPO} ${GIT_REF}| tee Gemfile 
 RUN bundle install --path=lib/ --binstubs=bin/ --standalone
