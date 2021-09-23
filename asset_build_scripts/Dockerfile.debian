@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y git wget
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" |tee  /etc/apt/sources.list.d/pgdg.list
 RUN apt update
-RUN apt-get install -y libpq-dev
+RUN apt-get install -y libpq5  libpq-dev
 RUN \
   printf "source 'https://rubygems.org'\n\ngem \"%s\", :git => \"%s\" , :ref => \"%s\"\n" ${ASSET_GEM} ${GIT_REPO} ${GIT_REF}| tee Gemfile 
 RUN bundle install --path=lib/ --binstubs=bin/ --standalone
